@@ -12,6 +12,7 @@
     --ink:#11161c;
     --panel:#1a232c;
     --panel-2:#212c37;
+    --panel-3:#26313d;
     --line: rgba(237,237,230,0.10);
     --text:#edede6;
     --muted:#93a1ad;
@@ -33,7 +34,7 @@
   }
   @media (prefers-color-scheme: light){
     :root:not([data-theme="dark"]){
-      --ink:#11161c; --panel:#1a232c; --panel-2:#212c37; --text:#edede6; --muted:#93a1ad;
+      --ink:#11161c; --panel:#1a232c; --panel-2:#212c37; --panel-3:#26313d; --text:#edede6; --muted:#93a1ad;
     }
   }
   *,*::before,*::after{box-sizing:inherit;}
@@ -69,7 +70,7 @@
   .hero h1{
     font-family:"IBM Plex Serif"; font-weight:600; font-style:italic;
     font-size: clamp(30px, 6vw, 46px); line-height:1.08; margin:0 0 14px;
-    max-width: 13ch;
+    max-width: 14ch;
   }
   .hero p.lead{color:var(--muted); font-size:16px; line-height:1.6; max-width:56ch; margin:0 0 28px;}
 
@@ -112,7 +113,7 @@
   }
   .back:hover{color:var(--text); border-color:rgba(237,237,230,0.25);}
 
-  .filterrow{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;}
+  .filterrow{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:14px;}
   .fbtn{
     background:var(--panel); border:1px solid var(--line); color:var(--muted);
     border-radius:999px; padding:7px 14px; font:inherit; font-size:12.5px; cursor:pointer;
@@ -121,6 +122,34 @@
   .fbtn.active{background:var(--amber-dim); border-color:rgba(232,163,61,0.5); color:var(--amber);}
   .fbtn.active.teal{background:var(--teal-dim); border-color:rgba(87,208,189,0.5); color:var(--teal);}
   .fbtn.active.violet{background:var(--violet-dim); border-color:rgba(183,140,232,0.5); color:var(--violet);}
+
+  /* group chips */
+  .groupgrid{display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:18px;}
+  @media (max-width:600px){.groupgrid{grid-template-columns:1fr;}}
+  .groupchip{
+    text-align:left; background:var(--panel); border:1px solid var(--line); color:var(--text);
+    border-radius:9px; padding:12px 14px; font:inherit; cursor:pointer;
+    display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .groupchip:hover{border-color:rgba(237,237,230,0.25); background:var(--panel-2);}
+  .groupchip .gt{font-size:14px; font-weight:500;}
+  .groupchip .gc{font-family:"IBM Plex Mono"; font-size:11.5px; color:var(--muted); flex:none;}
+  .groupchip.active{border-color:rgba(232,163,61,0.55); background:var(--amber-dim);}
+  .groupchip.active.teal{border-color:rgba(87,208,189,0.55); background:var(--teal-dim);}
+  .groupchip.active.violet{border-color:rgba(183,140,232,0.55); background:var(--violet-dim);}
+
+  .sectionlabel{font-family:"IBM Plex Mono"; font-size:11.5px; letter-spacing:0.03em; color:var(--muted); margin:22px 0 10px;}
+  .sectionlabel:first-child{margin-top:0;}
+
+  /* segmented control */
+  .segwrap{display:inline-flex; background:var(--panel); border:1px solid var(--line); border-radius:9px; padding:3px; gap:2px;}
+  .seg{
+    background:none; border:none; color:var(--muted); font:inherit; font-size:13px;
+    padding:8px 14px; border-radius:7px; cursor:pointer; font-family:"IBM Plex Mono";
+  }
+  .seg.active{background:var(--panel-3); color:var(--text);}
+  .segrow{display:flex; flex-direction:column; gap:8px; margin-bottom:18px;}
+  .seglabel{font-size:12.5px; color:var(--muted); margin-bottom:2px;}
 
   .progwrap{margin-bottom:22px;}
   .progtext{display:flex; justify-content:space-between; font-family:"IBM Plex Mono"; font-size:12px; color:var(--muted); margin-bottom:7px;}
@@ -162,6 +191,26 @@
     width:38px; height:38px; font:inherit; font-size:15px; cursor:pointer; display:flex; align-items:center; justify-content:center;
   }
   .iconbtn:hover{color:var(--text);}
+  .iconbtn.active{color:var(--amber); border-color:rgba(232,163,61,0.5);}
+
+  /* flashcard LIST mode (grouped, nothing skipped) */
+  .listcard{
+    background:var(--panel); border:1px solid var(--line); border-radius:10px;
+    margin-bottom:8px; overflow:hidden;
+  }
+  .listhead{
+    width:100%; text-align:left; background:none; border:none; color:var(--text); font:inherit;
+    padding:14px 16px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .listhead .lt{font-weight:600; font-size:14.5px;}
+  .listhead .lx{font-family:"IBM Plex Mono"; color:var(--muted); font-size:14px; flex:none; transition:transform .15s;}
+  .listcard.open .listhead .lx{transform:rotate(45deg); color:var(--amber);}
+  .listbody{
+    max-height:0; overflow:hidden; transition:max-height .2s ease;
+    color:var(--muted); font-size:14px; line-height:1.6; padding:0 16px;
+  }
+  .listcard.open .listbody{max-height:400px; padding:0 16px 16px;}
+  .listtoolbar{display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; gap:10px; flex-wrap:wrap;}
 
   /* ---- QUIZ ---- */
   .scorepill{
@@ -195,6 +244,37 @@
   .opt.wrong .letter{color:var(--bad); border-color:rgba(229,101,79,0.55);}
   .opt.dim{opacity:0.45;}
 
+  /* identification (typed recall) */
+  .idform{display:flex; gap:10px; flex-wrap:wrap;}
+  .idinput{
+    flex:1 1 220px; background:var(--panel-2); border:1px solid var(--line); color:var(--text);
+    border-radius:10px; padding:14px 16px; font:inherit; font-size:15px;
+  }
+  .idinput:focus{outline:none; border-color:rgba(232,163,61,0.55);}
+  .idinput:disabled{opacity:0.7;}
+  .idsubmit{
+    background:var(--amber-dim); border:1px solid rgba(232,163,61,0.5); color:var(--amber);
+    border-radius:10px; padding:14px 20px; font:inherit; font-size:14.5px; font-weight:600; cursor:pointer; flex:none;
+  }
+  .idsubmit:hover{border-color:rgba(232,163,61,0.8);}
+  .idsubmit:disabled{opacity:0.4; cursor:default;}
+  .idresult{margin-top:18px; padding:16px 18px; border-radius:10px; display:none;}
+  .idresult.show{display:block;}
+  .idresult.good{background:var(--good-dim); border:1px solid rgba(79,191,120,0.4);}
+  .idresult.bad{background:var(--bad-dim); border:1px solid rgba(229,101,79,0.4);}
+  .idrow{display:flex; justify-content:space-between; gap:14px; font-size:14px; padding:4px 0; flex-wrap:wrap;}
+  .idrow .k{color:var(--muted); flex:none;}
+  .idrow .v{font-weight:600; text-align:right;}
+  .idresult.good .v{color:#bdeccf;}
+  .idresult.bad .v.correct-term{color:#bdeccf;}
+  .idresult.bad .v.your-term{color:#f6c9c1;}
+  .overridebtn{
+    margin-top:12px; background:none; border:1px solid var(--line); color:var(--muted);
+    border-radius:8px; padding:8px 14px; font:inherit; font-size:12.5px; cursor:pointer;
+  }
+  .overridebtn:hover{color:var(--text); border-color:rgba(237,237,230,0.3);}
+  .overridebtn.flipped{color:var(--good); border-color:rgba(79,191,120,0.4);}
+
   .feedback{
     margin-top:18px; padding:14px 16px; border-radius:10px; font-size:14.5px; line-height:1.55;
     display:none;
@@ -210,6 +290,13 @@
   .results{text-align:center; padding:30px 10px;}
   .results .big{font-family:"IBM Plex Mono"; font-size:52px; font-weight:700; color:var(--teal); margin-bottom:6px;}
   .results p{color:var(--muted); margin:0 0 26px;}
+
+  .startbtn{
+    background:linear-gradient(155deg, var(--amber), #b97a1f); border:none; color:#1a1206;
+    border-radius:10px; padding:15px 22px; font:inherit; font-size:15px; font-weight:600; cursor:pointer;
+    width:100%;
+  }
+  .startbtn:hover{filter:brightness(1.07);}
 
   footer.note{color:var(--muted); font-size:12.5px; text-align:center; margin-top:40px; line-height:1.6;}
 
@@ -227,677 +314,605 @@
 /* =========================================================
    DATA
    ========================================================= */
+</script>
+<script>
 const FLASHCARDS = [
-// ---- MODULE 1: OS FUNDAMENTALS ----
-{t:"Operating system (OS)",d:"A computer program that provides a user interface, storage management (file system), process/service management, memory & I/O management, security & resource protection, and a kernel.",m:1},
-{t:"User interface",d:"The OS feature that lets users interact with the computer, typically via keyboard/mouse or touch.",m:1},
-{t:"File system",d:"The method by which an OS stores and organizes files and manages access to them on a storage device.",m:1},
-{t:"Process",d:"A program that has been loaded into memory and is run by the CPU.",m:1},
-{t:"Service",d:"The Windows term for a process without a user interface that runs in the background.",m:1},
-{t:"Daemon",d:"The Linux term for a process without a user interface that runs in the background (same idea as a Windows \"service\").",m:1},
-{t:"Kernel",d:"The heart of the OS. It runs with the highest priority and handles scheduling, memory/I/O management, and security.",m:1},
-{t:"Single-tasking operating system",d:"An OS that can execute only a single process at a time (e.g., CP/M, MS-DOS, Palm OS, iOS 3 and earlier).",m:1},
-{t:"Multitasking operating system",d:"An OS that quickly switches between all processes loaded into memory so multiple programs appear to run at once.",m:1},
-{t:"iOS 3 (and earlier)",d:"A single-tasking OS for iPhone/iPad — only the foreground app received CPU time.",m:1},
-{t:"iOS 4 / iOS 4.2",d:"iOS 4 (June 2010) brought multitasking to iPhone; iOS 4.2 (Nov 2010) allowed multitasking on iPad.",m:1},
-{t:"CP/M, PC-DOS, MS-DOS",d:"Command-line, single-tasking OSs; the original operating systems on the IBM PC in the early 1980s.",m:1},
-{t:"Personal digital assistant (PDA)",d:"A handheld device running email, calendar, note-taking, and web apps, but without an integrated phone (e.g., ran Palm OS).",m:1},
-{t:"Embedded system",d:"A computing device designed for one specific task (e.g., a dishwasher controller or car braking system), often single-tasking.",m:1},
-{t:"Cooperative multitasking",d:"The OS gives CPU control to a process and waits for it to terminate or enter a waiting state before giving control to the next process. Used by Windows until Windows 95.",m:1},
-{t:"Preemptive multitasking",d:"The OS strictly controls CPU time, giving each process a time slice based on interrupts, priority, or the timer expiring. Used by modern server/desktop/laptop OSs.",m:1},
-{t:"Single-user operating system",d:"Allows only one user at a time to interact with the OS UI, start processes, and access the file system directly (e.g., Windows 10, iOS, Android).",m:1},
-{t:"Remote Desktop Protocol (RDP)",d:"A protocol allowing a user to remotely sign in to a Windows 10 system — but only if no user is signed in at the local console.",m:1},
-{t:"Multiuser operating system",d:"Allows multiple users to sign in, start/stop processes, use the UI, and access the local file system simultaneously (e.g., Linux/UNIX, Windows Server via RDP).",m:1},
-{t:"General-purpose operating system",d:"Designed to provide a convenient UI and run business, productivity, or entertainment apps with reasonable (not guaranteed) performance.",m:1},
-{t:"Real-time operating system (RTOS)",d:"Designed to process inputs and produce outputs in a very specific, repeatable amount of time (e.g., VxWorks, QNX, LynxOS, Windows 10 IoT).",m:1},
-{t:"Deterministic",d:"Describes components of a real-time system (like network/storage) for which worst-case response times can be determined under given conditions.",m:1},
-{t:"The three OS roles",d:"Client, Server, and Standalone.",m:1},
-{t:"Client operating system",d:"An OS whose primary purpose is to run applications requested by a user and request data from network servers (e.g., Windows 10, macOS, Ubuntu Desktop).",m:1},
-{t:"Server operating system",d:"An OS whose primary purpose is to share network resources (storage, printers) and provide network services to clients (e.g., Windows Server, UNIX, many Linux distros).",m:1},
-{t:"Windows Server Core",d:"The default installation of Windows Server — it has no GUI, requiring administrators to use the command-line interface.",m:1},
-{t:"Standalone operating system",d:"An OS not designed to interact with other OSs or access network resources — most common today in embedded systems.",m:1},
-{t:"Fault tolerance",d:"The ability of a system to recover from a hardware or software failure.",m:1},
-{t:"Clustering",d:"The ability of two or more servers to act as one, for fault tolerance, load sharing, or both.",m:1},
-{t:"Failover cluster",d:"A server cluster for fault tolerance: two or more servers share identical configurations and data access; if one fails, another takes over.",m:1},
-{t:"Load-sharing (load-balancing) cluster",d:"Two or more servers alternate taking client requests to provide faster response times.",m:1},
-{t:"Hot swapping",d:"Replacing a failed hardware component (disk, memory, processor) without shutting the system down.",m:1},
-{t:"Hot adding",d:"Adding new components (storage, RAM, processors) to a running system, supporting scalability.",m:1},
-{t:"Boot procedure — 6 steps",d:"1) Power applied 2) CPU starts 3) CPU executes firmware startup routines 4) OS is located by firmware 5) OS loaded into RAM 6) OS processes/services are started.",m:1},
-{t:"Firmware",d:"Program code stored in non-volatile memory on hardware; performs diagnostic tests and boots the OS.",m:1},
-{t:"Non-volatile memory",d:"Memory that keeps its contents even when no power is applied (e.g., flash memory, EEPROM).",m:1},
-{t:"Bootstrap",d:"The initial program contained in firmware that locates and loads the bootloader program.",m:1},
-{t:"Bootloader",d:"The program (loaded by the bootstrap) responsible for loading the initial process that makes up the operating system.",m:1},
-{t:"BOOTMGR",d:"The Windows bootloader used from Windows Vista onward (NTLDR was used in older Windows).",m:1},
-{t:"GRUB / LILO",d:"Common bootloaders used by Linux systems.",m:1},
-{t:"BIOS (basic input/output system)",d:"Firmware residing on a motherboard chip that initializes I/O devices, runs POST, and locates/loads the OS.",m:1},
-{t:"UEFI",d:"Unified Extensible Firmware Interface — the newer form of firmware used on modern PCs in place of legacy BIOS.",m:1},
-{t:"Power-on self-test (POST)",d:"Tests performed by the BIOS at startup, such as memory and hardware component tests.",m:1},
-{t:"CMOS chip",d:"A low-power memory chip, powered by a small battery, that stores the BIOS configuration.",m:1},
-{t:"Kernel mode (privileged mode)",d:"A CPU mode in which a process has unrestricted access to hardware and can execute privileged CPU instructions.",m:1},
-{t:"User mode",d:"A CPU mode in which a process can only access memory allocated to it, must ask the OS for I/O access, and cannot run privileged instructions.",m:1},
-{t:"Process ID (PID)",d:"A unique identifier assigned to a process when created, used to communicate with or manage it.",m:1},
-{t:"ps (Linux command)",d:"Lists the processes you've started in Linux, including their PIDs.",m:1},
-{t:"kill PID (Linux command)",d:"Terminates a process by its process ID.",m:1},
-{t:"Four ways a process is created",d:"1) By the bootloader 2) Through a request by the OS 3) By another process (parent/child) 4) By a user.",m:1},
-{t:"Parent process / child process",d:"When a process creates another process, the creator is the parent and the new process is the child.",m:1},
-{t:"systemd (or init)",d:"On Linux, the first user mode process started at boot; responsible for starting most other user mode processes.",m:1},
-{t:"Windows Session Manager loads...",d:"...wininit and winlogon after kernel mode processes and device drivers are loaded.",m:1},
-{t:"wininit",d:"Starts most of the services configured to start when Windows boots.",m:1},
-{t:"winlogon",d:"Handles the Windows user logon procedure, calls lsass to verify credentials, and starts the Desktop Window Manager (dwm).",m:1},
-{t:"lsass",d:"The authentication service used on Windows to verify user credentials.",m:1},
-{t:"Desktop Window Manager (dwm)",d:"The process that manages much of the Windows 10 user interface.",m:1},
-{t:"Device driver",d:"Usually a kernel mode process that accesses hardware devices directly on behalf of user mode or other kernel mode processes.",m:1},
-{t:"File handle",d:"An identifier for a file containing all the information the file system needs to locate and access that file.",m:1},
-{t:"Polling",d:"An I/O handling method where the OS checks each device one after another, round-robin, to see if it needs attention — generally inefficient.",m:1},
-{t:"Interrupt",d:"A signal, usually generated by an I/O device, that alerts the CPU/OS that a device needs attention.",m:1},
-{t:"Interrupt request (IRQ) line",d:"A pin on the CPU that changes state when a hardware interrupt signal is generated.",m:1},
-{t:"Interrupt service routine (ISR)",d:"Also called an interrupt handler; the code executed when an interrupt occurs — calls the relevant device driver.",m:1},
-{t:"Interrupt masking",d:"ISRs turn off interrupts of equal or lower priority while they run, to prevent unnecessary interruptions.",m:1},
-{t:"Non-maskable interrupt (NMI)",d:"A class of interrupt that cannot be turned off; reserved for error conditions like divide-by-zero or memory errors.",m:1},
-{t:"Trap",d:"A software interrupt, generated by user mode programs when they need immediate kernel services.",m:1},
-{t:"Authentication",d:"Verifies that an account trying to access a system is valid and has provided valid credentials.",m:1},
-{t:"Authorization",d:"Verifies that an authenticated account has permission to perform a specific action, like opening a file.",m:1},
-{t:"ntoskrnl.exe",d:"The name of the kernel file in Windows systems.",m:1},
-{t:"XNU",d:"The name of the kernel used in macOS.",m:1},
-{t:"uname -sr",d:"The Linux command used to determine kernel information (name and release).",m:1},
-{t:"Multics",d:"Widely considered to be the first multiuser, multitasking operating system; ran on PDP series computers and led to UNIX.",m:1},
-{t:"UNIX (original)",d:"Developed at AT&T Bell Labs in 1969 by Kenneth Thompson and Dennis Ritchie as an improvement on Multics.",m:1},
-{t:"BASIC",d:"Beginner's All-purpose Symbolic Instruction Code — a simple programming language developed at Dartmouth College aimed at nonprogrammers.",m:1},
-{t:"MS-DOS",d:"Microsoft Disk Operating System — evolved in 1980 from 86-DOS (originally QDOS), a command-line OS that became a runaway success for Microsoft.",m:1},
-{t:"QDOS",d:"The Quick and Dirty Operating System written by Tim Paterson for the 8086 processor; evolved into 86-DOS and then MS-DOS.",m:1},
-{t:"Apple Macintosh (1984)",d:"The first widely distributed OS that was totally graphical in its user interface; also introduced use of the mouse to PC-based systems.",m:1},
-{t:"Windows 3.0 (1990)",d:"The first usable version of a graphical operating system for the PC.",m:1},
-{t:"Windows NT (1993)",d:"Microsoft's first true 32-bit, preemptive multitasking OS with integrated networking; later offered in Workstation and Server versions.",m:1},
-{t:"Windows 95",d:"Mostly 32-bit upgrade to Windows 3.x with improved UI and native 32-bit app support; it was still backward compatible with 16-bit apps.",m:1},
-{t:"Linux kernel 0.01 (1991)",d:"Linus Torvalds made the very first version of Linux available for download via FTP.",m:1},
-{t:"OS/2 (1987)",d:"IBM operating system jointly developed with Microsoft; required extensive hardware and could not run older MS-DOS applications, so it was not a big hit.",m:1},
-{t:"Windows Server 2016",d:"Emphasizes virtualization, flexible storage, and cloud computing; introduced Nano Server and Microsoft's first support for containers.",m:1},
-{t:"GNOME 1.0 desktop (1999)",d:"Became available as free software and grew to become one of the most popular UNIX/Linux desktops.",m:1},
-{t:"SVR4 vs. BSD",d:"The two main design standards for the many \"flavors\" of UNIX: System V Release 4 and the Berkeley Software Distribution.",m:1},
-{t:"SAMBA",d:"The Linux equivalent of \"Client for Microsoft Networks,\" used for accessing shared Windows files/printers.",m:1},
-{t:"Network File System (NFS)",d:"Linux's native file sharing protocol.",m:1},
-{t:"Client vs. server performance tuning",d:"Client OSs are tuned for foreground \"Programs\"; server OSs (like Windows Server) are tuned for \"Background services.\"",m:1},
-{t:"Command-line interface",d:"An interface where users type commands instead of using a GUI's point-and-click method (e.g., original MS-DOS, PowerShell, a Linux shell).",m:1},
-{t:"Graphical user interface (GUI)",d:"An interface allowing users to interact by pointing, clicking, or touching icons/menus rather than typing commands. First widely popularized by the 1984 Macintosh.",m:1},
-{t:"Computer hardware",d:"The physical components of a computer (CPU, memory, disk, video card, etc.) that are controlled and coordinated by the operating system.",m:1},
-{t:"Scalability",d:"A system's ability to grow — for example, supporting hot adding of storage, RAM, or processors while running.",m:1},
-{t:"\"Job\" (legacy term)",d:"The old name for a process, dating back to when systems were single-tasking and ran programs one after another (batch processing).",m:1},
-{t:"\"Task\" (as in Task Manager)",d:"Another term for a process — Windows' Task Manager is literally a process manager.",m:1},
-{t:"Windows Virtual Desktop",d:"A Microsoft Azure feature that provides a true multiuser version of Windows 10 (outside of this, Windows 10 is single-user).",m:1},
-{t:"Novell NetWare",d:"An older network server OS that early standalone PCs (like MS-DOS machines) were sometimes upgraded with a network card to connect to.",m:1},
-{t:"Windows 7 end of life",d:"January 2020 — Microsoft discontinued support (including security updates) for Windows 7.",m:1},
-{t:"Windows Server 2008 / 2012 support",d:"Support for Windows Server 2008 ended in January 2020; support for Windows Server 2012 was scheduled to end in October 2023.",m:1},
-{t:"Windows 10 version 1903",d:"The Windows 10 build (released March 2019) that the module's feature descriptions and screenshots are based on.",m:1},
-{t:"Process Explorer",d:"A free Sysinternals utility (downloadable from Microsoft) that shows a graphical process tree on Windows systems.",m:1},
-{t:"Task Manager",d:"A Windows GUI tool for viewing and managing running processes, performance data, and startup programs.",m:1},
-{t:"Resource Monitor",d:"A Windows tool (opened from Task Manager) showing detailed CPU, memory, disk, and network usage per process.",m:1},
-{t:"Active Directory",d:"Microsoft's directory service, an example of a service commonly bundled with a server OS.",m:1},
-{t:"DHCP client / DNS client",d:"Networking components preinstalled on client OSs, used to automatically get an IP address (DHCP) and resolve names (DNS).",m:1},
+// ---- OS CORE CONCEPTS ----
+{t:"Operating system (OS)",d:"A computer program that provides a user interface, storage management (file system), process/service management, memory & I/O management, security & resource protection, and a kernel.",m:1,g:"m1-core"},
+{t:"User interface",d:"The OS feature that lets users interact with the computer, typically via keyboard/mouse or touch.",m:1,g:"m1-core"},
+{t:"File system",d:"The method by which an OS stores and organizes files and manages access to them on a storage device.",m:1,g:"m1-core"},
+{t:"Process",d:"A program that has been loaded into memory and is run by the CPU.",m:1,g:"m1-core"},
+{t:"Service",d:"The Windows term for a process without a user interface that runs in the background.",m:1,g:"m1-core"},
+{t:"Daemon",d:"The Linux term for a process without a user interface that runs in the background (same idea as a Windows \"service\").",m:1,g:"m1-core"},
+{t:"Kernel",d:"The heart of the OS. It runs with the highest priority and handles scheduling, memory/I/O management, and security.",m:1,g:"m1-core"},
 
-// ---- MODULE 2: MODERN CLIENT AND SERVER OPERATING SYSTEMS ----
-{t:"MS-DOS 1.0 (1981)",d:"Microsoft's original OS for the IBM PC platform; often just called DOS. Supported only 5.25-inch floppy disks storing 320K.",m:2},
-{t:"PC DOS",d:"The version of MS-DOS that ran on early IBM computers, customized and marketed by IBM (vs. Microsoft-branded MS-DOS used on PC clones).",m:2},
-{t:"MS-DOS 2.0 (1983)",d:"Supported a 10 MB hard disk on the IBM PC-XT and 360K floppies; required a minimum of 28K RAM (up from 14K in MS-DOS 1.0).",m:2},
-{t:"MS-DOS 3.1 (1984)",d:"First DOS version to support the network redirector, letting a shared folder be accessed as a drive letter. Also introduced Microsoft Network (MS-Net), which gained little traction against Novell NetWare.",m:2},
-{t:"Network redirector",d:"A feature (introduced in MS-DOS 3.1) that allows a network resource, like a shared folder, to be accessed as a drive letter.",m:2},
-{t:"MS-DOS 6.22",d:"The last version of MS-DOS released as a separate product; later versions were embedded as the underlying OS for Windows 95, 98, and ME.",m:2},
-{t:"Windows (1983/1985)",d:"Announced in 1983, released in 1985. Early Windows was really just a graphical application with mouse support running on top of MS-DOS — not multitasking.",m:2},
-{t:"Windows 3.1 (1992)",d:"The first popular, usable Microsoft GUI; still built on MS-DOS and did not support real multitasking, only task-switching.",m:2},
-{t:"Task-switching",d:"A process where the system gives control to whichever window/program was just clicked, but only that foreground task gets CPU time — used in Windows 3.1 (not true multitasking).",m:2},
-{t:"Windows for Workgroups (WfW) 3.1/3.11 (1993)",d:"Added built-in networking, enhanced network drivers, and a TCP/IP protocol stack. WfW 3.11 ran only in 80386 enhanced mode, making it faster/more reliable.",m:2},
-{t:"Windows 95",d:"Introduced the Start Menu/taskbar desktop that became the standard look for all future Windows; a hybrid 16-bit/32-bit OS that eliminated the 640 KB memory limit.",m:2},
-{t:"Windows 95's new features",d:"The Windows desktop, Plug and Play, ActiveX/COM, the registry, multitasking & multithreading, and enhanced network/Internet capabilities.",m:2},
-{t:"Plug and Play (PnP)",d:"A Windows 95 hardware feature that lets the OS automatically detect and configure newly installed hardware, replacing manual switch/jumper configuration.",m:2},
-{t:"ActiveX / Component Object Model (COM)",d:"A Microsoft technology (and its parent standard) providing a standardized way for objects — programs, files, printers, windows — to communicate with each other.",m:2},
-{t:"The registry (Windows 95+)",d:"A hierarchical database storing OS configuration, driver info, software/hardware settings, performance info, and desktop configuration — replacing scattered config files.",m:2},
-{t:"Task supervisor",d:"A Windows 95 feature that detects processes that appear stuck (hung tasks) and lets you close them without restarting the whole OS.",m:2},
-{t:"Hung task",d:"A process/task that no longer responds to keyboard or mouse input.",m:2},
-{t:"Multithreading (Windows 95)",d:"Windows 95 was the first Microsoft OS to support multithreading — a CPU executing separate parts of a process at the same time.",m:2},
-{t:"Windows 98 — Active Desktop",d:"A Windows 98 feature letting you view desktop items as a Web page; discontinued starting with Windows XP Professional 64-bit Edition.",m:2},
-{t:"Windows 98 — USB support",d:"Windows 98 added support for newer hardware standards including Universal Serial Bus (USB) 1.0.",m:2},
-{t:"Windows Millennium Edition (Me)",d:"Developed for home users (not office/professional); introduced Universal Plug and Play (UPnP), a set of protocols for auto-discovering/configuring network devices.",m:2},
-{t:"Windows NT",d:"\"Windows New Technology,\" first announced 1991 for high-end workstations/servers after Microsoft and IBM ended their OS/2 collaboration. Kernel runs in privileged mode.",m:2},
-{t:"ntoskrnl.exe (ntoskernel)",d:"The core kernel file for Windows NT and all Windows OSs starting with Windows 2000. The kernel for Windows 9x/ME was krnl386.exe instead.",m:2},
-{t:"Windows NT 3.1",d:"There were no earlier NT versions — NT started life as version 3.1 (announced 1991, released July 1993).",m:2},
-{t:"Windows NT 4.0",d:"The first widely successful version of Windows NT, released around the same time as Windows 95, sporting the Windows 95 look.",m:2},
-{t:"Windows NT Workstation vs. Windows NT Server",d:"NT Workstation was a stable, secure graphical OS for end users; NT Server was a multiuser server OS for Windows and other OS clients.",m:2},
-{t:"Windows NT networking protocols",d:"Supported TCP/IP (Internet standard), NetBEUI (proprietary Windows file sharing), IPX/SPX (Novell NetWare), DLC (IBM mainframes), and AppleTalk (Apple computers).",m:2},
-{t:"C2 security rating",d:"Windows NT 4.0 Server received a C2 top-secret U.S. government security rating covering file/folder protection, accounts & passwords, auditing, and access controls.",m:2},
-{t:"Domain (Windows NT)",d:"An administrative and security boundary within which all member computers are subject to common administrative and security policies.",m:2},
-{t:"Primary domain controller (PDC)",d:"In a Windows NT domain, the one server responsible for keeping all usernames/passwords; other servers requested info from it. Precursor to Active Directory.",m:2},
-{t:"Single sign-on",d:"A feature of the Windows NT domain model letting a user sign on once and gain access to any computer that's a member of the domain.",m:2},
-{t:"NTFS (New Technology File System)",d:"Introduced in Windows NT; provides file- and folder-level permissions. Still the primary file system on all Windows OSs.",m:2},
-{t:"Windows on Windows (WOW) / NTVDM",d:"A Windows NT subsystem that lets 16-bit applications run preemptively multitasked in a virtual DOS environment (NT Virtual DOS Machine), reducing freezes.",m:2},
-{t:"Windows 2000",d:"Built on Windows NT technology; kernel rewrite ran ~30% faster, added VPN support, driver signing, and introduced Active Directory.",m:2},
-{t:"Virtual private network (VPN)",d:"A private network providing authentication and encryption while running over a non-secure network like the Internet, introduced with Windows 2000.",m:2},
-{t:"Driver signing",d:"A Windows 2000 feature ensuring device drivers can't be inadvertently overwritten by earlier versions and only certified drivers can be installed.",m:2},
-{t:"Active Directory",d:"Introduced in Windows 2000 Server; the core service/database of a Windows domain, providing single-point user authentication/authorization and resource management via organizational units.",m:2},
-{t:"Organizational units",d:"Folders within Active Directory used to organize resources hierarchically, much like a file system organizes files in folders/subfolders.",m:2},
-{t:"Domain controller (DC) — Windows 2000 change",d:"Unlike NT's single read/write PDC + read-only BDCs, every Windows 2000 DC could create and change Active Directory info; DCs synchronize via replication.",m:2},
-{t:"Backup domain controller (BDC)",d:"In Windows NT Server 4.0, a server holding a read-only copy of account/security info as a backup to the PDC.",m:2},
-{t:"Replication",d:"The process by which domain controllers periodically synchronize Active Directory information with each other.",m:2},
-{t:"Kerberos",d:"A security system/authentication protocol (added in Windows 2000) providing mutual authentication between client and server using encrypted tickets instead of sending passwords across the network.",m:2},
-{t:"IntelliMirror",d:"A Windows 2000 concept enabling clients to access the same desktop settings/apps/files anywhere; enabled roaming profiles, folder redirection, and offline files.",m:2},
-{t:"Windows 2000 editions",d:"Server, Advanced Server, and Datacenter Server, differing mainly in CPU/memory support; Advanced/Datacenter also supported server clustering.",m:2},
-{t:"Windows XP & Windows Server 2003",d:"The two products Windows 2000 evolved into, both built on the Windows 2000 kernel; XP was the desktop version, Server 2003 the server version.",m:2},
-{t:"Activation",d:"A mechanism to prevent software piracy, first required by Windows XP; the OS could be activated online or by phone, with the code linked to a specific computer.",m:2},
-{t:"Windows XP Professional",d:"Intended for office/professional use; supported multiple user accounts and could act as a small server for up to 10 users, like Windows 2000 Professional.",m:2},
-{t:"Windows Server 2003/R2 new features",d:"XP-style GUI, faster Active Directory logon, hundreds of new group policies, 64-bit Itanium support, Remote Desktop management, Terminal Services, and .NET runtime.",m:2},
-{t:"Distributed File System (DFS)",d:"A valuable Windows Server 2003 R2 feature (along with clustered servers and group policies) for managing files across an enterprise network.",m:2},
-{t:"Windows 7",d:"Released after Windows Vista; known for simply \"working,\" with faster performance (~1/3 faster than XP/2000), enhanced search, and the Aero desktop presentation.",m:2},
-{t:"Windows Vista",d:"The version between XP and 7; poorly received due to early reliability/driver problems, quickly followed by Windows 7 to mitigate reputation damage.",m:2},
-{t:"Aero",d:"Windows 7's \"unified presentation subsystem\" desktop (Authentic, Energetic, Reflective, Open) offering consistent window design and 3D \"Glass\" visual effects.",m:2},
-{t:"User Account Protection (UAP) / UAC",d:"Introduced in Windows Vista; warns users when apps/tools are about to change critical system settings, limiting the risk of running everything as administrator.",m:2},
-{t:"Windows Service Hardening (WSH)",d:"A Windows 7 feature that restricts a service (like FTP) from performing activities in critical OS structures, limiting damage if that service is compromised.",m:2},
-{t:"Connection security rules / IPsec",d:"Group policy rules ensuring communication sessions between clients/servers are authenticated and encrypted using the IP Security (IPsec) protocol suite.",m:2},
-{t:"Windows Server 2008 new features",d:"Read-only domain controller, failover & load-balancing clusters, Hyper-V, self-healing NTFS, Server Core, PowerShell, and Server Manager.",m:2},
-{t:"Read-only domain controller (RODC)",d:"A domain controller (Windows Server 2008) where domain changes can't be initiated locally — changes are written elsewhere and replicated to it. Good for low-security branch offices.",m:2},
-{t:"Failover cluster",d:"Two or more tightly linked servers where one is active and others are standby; if the active server fails, a standby takes over providing services.",m:2},
-{t:"Network load-balancing (NLB) cluster",d:"A server configuration where servers share the load of incoming requests for scalability and fault tolerance; best for TCP/IP apps like Web servers, not database/file/print apps.",m:2},
-{t:"Hyper-V",d:"Microsoft's hypervisor service (introduced Windows Server 2008) allowing Windows Server to host multiple isolated virtual machines on one physical server.",m:2},
-{t:"Self-healing NTFS",d:"A Windows Server 2008 feature where Chkdsk-style repairs run in the background rather than requiring the whole volume to go offline.",m:2},
-{t:"Server Core",d:"A bare-bones Windows Server installation with a limited GUI, managed via command prompt/PowerShell, reducing the attack surface. Default install option since Server 2016/2019.",m:2},
-{t:"PowerShell",d:"A powerful command-line interface and scripting language (standard since Windows Server 2008) using verb-noun \"cmdlets\" like Get-Help or Set-User.",m:2},
-{t:"Server Manager",d:"A tool that combines/replaces older wizards, centralizing server setup, deployment, role management, and status checks in one location.",m:2},
-{t:"Windows 8/8.1",d:"Released Oct 2012 (8.1 in Oct 2013); intended to unify UI/code base across touch and desktop devices. The touch-centric interface (and missing Start button) was poorly received.",m:2},
-{t:"Storage Spaces",d:"A Windows 8 storage management tool letting users/admins pool disks of different sizes/interfaces into a single storage pool, creating virtual disks/volumes.",m:2},
-{t:"Client Hyper-V",d:"Brought Hyper-V virtualization to Windows client OSs starting with Windows 8, letting you run older Windows versions in a VM alongside the host OS.",m:2},
-{t:"Windows Server 2012",d:"Microsoft's deep dive into the private cloud; editions are Standard, Datacenter, Essentials (25 users or fewer), and Foundation (OEM-only, 15 users).",m:2},
-{t:"Minimal Server Interface (MinShell)",d:"A happy medium between Server Core and the full GUI, letting users perform most local management tasks with a GUI tool but lacking the full interface.",m:2},
-{t:"Resilient File System (ReFS)",d:"A file system introduced in Windows Server 2012 for large, highly reliable data storage; backward-compatible with NTFS but lacks features like file compression, disk quotas, and EFS.",m:2},
-{t:"Dynamic Access Control (DAC)",d:"Gives fine-tuned control over shared resources based on user attributes/file classification rather than only group-based permissions.",m:2},
-{t:"Windows 10",d:"Released July 2015 (jumping from 8.1, skipping \"9\"); may be the last numbered Windows release, with regular feature updates (e.g., v1507, v1903) instead of new version names.",m:2},
-{t:"Virtual desktops (Windows 10)",d:"Let users create multiple desktops and switch between them to organize open application windows — a feature long available on Linux desktop managers.",m:2},
-{t:"Cortana",d:"Windows 10's digital assistant (like Siri/Google Assistant), requiring a Microsoft account; accessed via the search bar, used for voice commands, reminders, and questions.",m:2},
-{t:"Windows Hello",d:"A Windows 10 sign-in feature letting you use facial recognition or a fingerprint (with compatible hardware) instead of just a password or PIN.",m:2},
-{t:"Windows Sandbox",d:"First available in Windows 10 v1903; a temporary, isolated desktop environment for running untrusted/experimental apps without affecting the host OS. Needs 4 GB RAM & 2 cores.",m:2},
-{t:"Windows Server 2016",d:"Comes with the Windows 10 UI; introduced Nano Server and expanded virtualization with Windows Server Containers and Hyper-V Containers.",m:2},
-{t:"Nano Server",d:"A Windows Server 2016 install option even smaller than Server Core, with no local logon (remote management only); can only run in a Windows container starting with version 1709.",m:2},
-{t:"Windows Containers",d:"Server 2016's two container options: Windows Server Containers (moderate isolation, shared kernel) and Hyper-V Containers (VM-level isolation without full VM overhead).",m:2},
-{t:"Windows Server 2019",d:"Focuses on hybrid cloud datacenters, security, and hyper-converged infrastructure (HCI); introduced Windows Admin Center and deeper Linux integration (WSL, encrypted Linux VMs).",m:2},
-{t:"Windows Admin Center (WAC)",d:"A browser-based management console (introduced in Server 2019) for managing servers, clusters, Windows 10 clients, and HCI, with tight Azure integration.",m:2},
-{t:"Hyper-converged infrastructure (HCI)",d:"A computing model where virtualization extends beyond VMs to virtual storage networks and virtualized networking, all software-defined rather than hardware-defined.",m:2},
-{t:"Windows Defender ATP",d:"Windows Defender Advanced Threat Protection; adds Exploit Guard, an intrusion prevention feature that can lock down a server under attack and alert an administrator.",m:2},
-{t:"UNIX",d:"The oldest, most diverse, and most complex OS covered — no single company holds an exclusive license, so many diverse \"flavors\" with diverse utilities exist.",m:2},
-{t:"BSD vs. SVR4",d:"The two main UNIX design standards: Berkeley Software Distribution (e.g., FreeBSD, NetBSD, macOS/Darwin) and System V Release 4 (e.g., many Linux distros, Solaris).",m:2},
-{t:"Linux",d:"\"UNIX-like\" OS based on standards developed after UNIX; runs on Intel/AMD, ARM, and RISC-V processors and is at the heart of many embedded/real-time systems.",m:2},
-{t:"Linux shells",d:"The user interface for Linux; most popular are the Bourne shell (sh), Bourne Again shell (bash), and C shell (csh, formatted similar to the C language).",m:2},
-{t:"External commands (Linux)",d:"OS or application programs stored as a separate executable file on disk, called by typing the command name at the shell prompt.",m:2},
-{t:"X Window (X11)",d:"Provides basic window management for most Linux GUIs; network-enabled, meaning an X terminal can run X Window and its apps remotely on another Linux computer.",m:2},
-{t:"GNOME / KDE",d:"Popular Linux desktop managers that run on top of X Window to provide a rich desktop user interface.",m:2},
-{t:"Linux terminal window",d:"The Linux GUI's equivalent of a Windows command prompt window, used to access a shell.",m:2},
-{t:"Linux networking",d:"Based on the BSD networking model, providing TCP/IP support; Linux is the most common OS for Web servers, mail servers, and many Internet-based applications.",m:2},
-{t:"macOS",d:"Built on Darwin, an open-source UNIX-like OS Apple released in 2000; the Mac's all-graphical UI/shell is said to have influenced Windows' look and feel.",m:2},
-{t:"Darwin",d:"The open-source, UNIX-like OS (released by Apple in 2000) that macOS is built on.",m:2},
-{t:"MultiFinder",d:"A program that gave pre-8.0 Mac OS versions task-switching (not true multitasking); Mac OS 8.0+ made multitasking standard for all applications.",m:2},
-{t:"AppleTalk",d:"An older Mac peer-to-peer networking protocol, remaining compatible through Mac OS X Leopard (10.5); no longer supported starting with Mac OS X 10.6 (Snow Leopard).",m:2},
-{t:"Mac OS X (\"Aqua\" interface)",d:"Mac OS X (version 10) sported the Aqua interface, the basis for all successive Mac OS X/macOS releases; replaced/removed customization of the old Apple menu.",m:2},
-{t:"System Preferences",d:"Mac OS X's tool (similar to Windows Control Panel) for setting time/date, display, startup, energy-saving, and network functions.",m:2},
-{t:"Dock",d:"A customizable macOS feature for starting multiple applications and switching between them in a multitasking environment.",m:2},
-{t:"Mac OS X 10.6 Snow Leopard",d:"The first version of Mac OS X to support only Intel-based processors; a Rosetta download retained support for older PowerPC applications.",m:2},
-{t:"Mac OS X 10.7 Lion",d:"Incorporated popular iOS features like Launchpad (browse installed apps) and expanded multi-touch gestures; introduced Mission Control.",m:2},
-{t:"Mac OS X 10.8 Mountain Lion",d:"Added support for iMessage, iWork, iCloud, and Notification Center; all software updates moved exclusively to the App Store.",m:2},
-{t:"Mac OS X 10.9 Mavericks",d:"Ran on Intel 64-bit processors; first release named after a California location instead of a big cat, adding Maps and iBooks.",m:2},
-{t:"Mac OS X 10.10 Yosemite",d:"Gave Mac OS X a flat, iOS 7-based facelift; introduced Handoff, letting you continue work in progress between an iOS device and your Mac.",m:2},
-{t:"Mac OS X 10.11 El Capitan",d:"Added Split View (two apps snapped to opposite sides of the screen), updated Spotlight, Pinned Sites, and Metal — a set of 3D development tools.",m:2},
-{t:"macOS 10.12 Sierra",d:"Introduced Siri (voice assistant) to the Mac and Optimized Storage, which removes locally-saved iCloud files when storage runs low.",m:2},
-{t:"macOS 10.14 Mojave",d:"Added Dark Mode, Dynamic Desktop (changes color scheme through the day), Marzipan (runs select iOS apps on Mac), and Desktop Stacks (auto-groups desktop icons).",m:2},
+// ---- SINGLE- VS. MULTITASKING ----
+{t:"Single-tasking operating system",d:"An OS that can execute only a single process at a time (e.g., CP/M, MS-DOS, Palm OS, iOS 3 and earlier).",m:1,g:"m1-tasking"},
+{t:"Multitasking operating system",d:"An OS that quickly switches between all processes loaded into memory so multiple programs appear to run at once.",m:1,g:"m1-tasking"},
+{t:"iOS 3 (and earlier)",d:"A single-tasking OS for iPhone/iPad — only the foreground app received CPU time.",m:1,g:"m1-tasking"},
+{t:"iOS 4 / iOS 4.2",d:"iOS 4 (June 2010) brought multitasking to iPhone; iOS 4.2 (Nov 2010) allowed multitasking on iPad.",m:1,g:"m1-tasking"},
+{t:"CP/M, PC-DOS, MS-DOS",d:"Command-line, single-tasking OSs; the original operating systems on the IBM PC in the early 1980s. CP/M stands for Control Program for Microcomputers.",m:1,g:"m1-tasking"},
+{t:"Personal digital assistant (PDA)",d:"A handheld device running email, calendar, note-taking, and web apps, but without an integrated phone (e.g., ran Palm OS).",m:1,g:"m1-tasking"},
+{t:"Embedded system",d:"A computing device designed for one specific task (e.g., a dishwasher controller or car braking system), often single-tasking.",m:1,g:"m1-tasking"},
+{t:"Cooperative multitasking",d:"The OS gives CPU control to a process and waits for it to terminate or enter a waiting state before giving control to the next process. Used by Windows until Windows 95.",m:1,g:"m1-tasking"},
+{t:"Preemptive multitasking",d:"The OS strictly controls CPU time, giving each process a time slice based on interrupts, priority, or the timer expiring. Used by modern server/desktop/laptop OSs.",m:1,g:"m1-tasking"},
 
-// ---- MODULE 3: THE CPU ----
-{t:"System architecture",d:"Includes the number/type of CPUs in the hardware, the communication routes (buses) between them, and other hardware like memory and disk storage.",m:3},
-{t:"Bus",d:"A path or channel between a computer's CPU and the devices it manages, such as memory and I/O devices.",m:3},
-{t:"Single-processor computer",d:"A computer with just one physical CPU chip (most client computers).",m:3},
-{t:"Processor core",d:"The part of a CPU that reads and executes machine code, such as reading/writing data or performing arithmetic.",m:3},
-{t:"Multicore processor",d:"A CPU chip with two or more cores (e.g., dual-core = 2 cores, quad-core = 4 cores).",m:3},
-{t:"Die",d:"The result of manufacturing a CPU on a silicon wafer — holds all the logic making up the CPU.",m:3},
-{t:"Multiprocessor computer",d:"A computer (often a server) with multiple separate physical CPUs, ranging from two to 128 or more.",m:3},
-{t:"Reset vector",d:"A memory address a CPU begins reading from whenever it receives a reset signal (e.g., power-on); points to non-volatile memory holding bootloader code.",m:3},
-{t:"Program counter",d:"A register on a CPU that contains the address of the next instruction the CPU will execute.",m:3},
-{t:"Control unit (CU)",d:"The \"director of operations\" in the CPU — provides timing and coordination between the ALU, registers, and system bus.",m:3},
-{t:"Arithmetic logic unit (ALU)",d:"Performs the primary task of a CPU — executing arithmetic (add, multiply) and logic (AND, OR) instructions.",m:3},
-{t:"Floating-point unit (FPU)",d:"A component found in most CPUs that performs floating-point (decimal) operations.",m:3},
-{t:"Register",d:"A temporary holding location on a CPU where data must be placed before the CPU can use it.",m:3},
-{t:"Memory/cache controller",d:"Intercepts memory accesses and checks cache first; if not found there, passes the request to main memory.",m:3},
-{t:"System bus (3 types)",d:"Made up of the control bus, address bus, and data bus, used to communicate between the CPU and RAM/I-O devices.",m:3},
-{t:"Control bus",d:"Carries status signals — like interrupt signals — between the CPU and other devices.",m:3},
-{t:"Address bus",d:"Carries address signals indicating where data should be read from or written to in memory.",m:3},
-{t:"Data bus",d:"Carries the actual data being read from or written to system memory.",m:3},
-{t:"CISC (Complex Instruction Set Computing)",d:"CPU architecture with complex instructions that do a lot of work each (may take several clock cycles); uses microcode.",m:3},
-{t:"RISC (Reduced Instruction Set Computing)",d:"CPU architecture with simple instructions that each typically take one clock cycle; no microcode, more registers, easier pipelining.",m:3},
-{t:"Instruction set",d:"The list of machine code commands that a CPU supports.",m:3},
-{t:"Pipelining",d:"The ability of a CPU to perform more than one task on a single clock cycle — easier and more effective on RISC CPUs.",m:3},
-{t:"Microcode",d:"A small program inside a CISC chip that interprets and executes each complex instruction; RISC CPUs don't use it.",m:3},
-{t:"Compiler",d:"A program that takes a high-level language (like C++ or Java) and turns it into assembly code.",m:3},
-{t:"Assembler",d:"Turns human-readable assembly code instructions into numeric opcodes the CPU can understand.",m:3},
-{t:"Opcode",d:"The numeric code read by the CPU that represents a particular machine instruction.",m:3},
-{t:"Internal clock speed",d:"The speed at which a CPU executes an instruction (or part of one) internally; can range from under 1 MHz to over 5 GHz.",m:3},
-{t:"External clock speed",d:"The (usually lower) speed a CPU uses to communicate with the rest of the computer — often 1/2, 1/3, 1/4, or 1/8 the internal clock speed.",m:3},
-{t:"Cache memory",d:"Extremely fast memory built into the CPU chip that holds data/instructions likely to be needed next, avoiding slow waits on RAM.",m:3},
-{t:"Level 1 (L1) cache",d:"The fastest but smallest cache (typically 8–128 KB per core); runs at CPU speed and is always part of the CPU chip.",m:3},
-{t:"Level 2 (L2) cache",d:"Somewhat slower than L1 but larger (often 256 KB–1 MB per core); also an integral part of the CPU chip.",m:3},
-{t:"Level 3 (L3) cache",d:"Shared among CPU cores; on modern CPUs is part of the chip; found in sizes of 8 MB, 16 MB, and greater.",m:3},
-{t:"Level 4 (L4) cache",d:"If present, usually found on the motherboard; some high-end CPUs now include on-board L4 cache up to 128 MB.",m:3},
-{t:"Cache controller",d:"Specialized hardware that predicts what data will be needed and makes it available in cache before it's needed.",m:3},
-{t:"16-bit address bus",d:"Can address 64 KB (65,536 bytes) of memory.",m:3},
-{t:"32-bit address bus",d:"Can address roughly 4 GB (4 billion bytes) of memory.",m:3},
-{t:"64-bit address bus",d:"Used by modern processors; allows addressing up to 16 TB of memory.",m:3},
-{t:"CPU scheduling",d:"Determines which process executes when multiple processes are waiting to run — a function of the OS, not the CPU hardware itself.",m:3},
-{t:"Thread",d:"The smallest block of computer code that can be independently scheduled for execution.",m:3},
-{t:"Multithreading",d:"The ability of an OS to run two or more threads of a process at the same time.",m:3},
-{t:"Hyper-threading (HT)",d:"An Intel feature allowing two threads to run on each CPU core simultaneously (a 4-core HT CPU shows as 8 logical processors).",m:3},
-{t:"x86",d:"Notation indicating compatibility with the Intel 8086 processor architecture used in modern Intel/AMD CPUs.",m:3},
-{t:"Intel 8086",d:"The CPU architecture found in early PCs; introduced in 1978, originally ran at 16 MHz with a 16-bit data bus.",m:3},
-{t:"Intel 8088",d:"Used in the original IBM PC; almost identical to the 8086 except its data bus was only 8 bits wide (chosen for lower cost).",m:3},
-{t:"Overclocking",d:"Running a processor faster than its stated/rated clock speed (e.g., running a 3 GHz CPU at 3.3 GHz).",m:3},
-{t:"AMD",d:"Advanced Micro Devices — makes CISC processors compatible with Intel x86-based software; tends to cost less and overclock more easily.",m:3},
-{t:"ARM (Advanced RISC Machines) processor",d:"RISC processors common in mobile devices, embedded systems, and increasingly servers; the most common processor architecture in the world.",m:3},
-{t:"Microarchitecture",d:"The description of a CPU's internal circuitry — defines the chip-making technology, supported instruction set, and bit size.",m:3},
-{t:"GT/s (gigatransfers per second)",d:"The unit often used to describe the bus speed of modern multicore CPUs.",m:3},
-{t:"Intel Core i5 (Table 3-2)",d:"Introduced 2009; 2–4 cores; 1.06–3.76 GHz; 2.5 GT/s bus; 3–8 MB L3 cache. AMD comparable: Ryzen 5.",m:3},
-{t:"Intel Core i7 (Table 3-2)",d:"Introduced 2008; 2–6 cores; 1.06–3.33 GHz; 2.5–4.8 GT/s bus; 4–15 MB L3 cache. AMD comparable: Ryzen 7.",m:3},
-{t:"Intel Core i3 (Table 3-2)",d:"Introduced 2010; 2 cores; 1.20–3.06 GHz; 2.5 GT/s bus; 3–4 MB L3 cache. AMD comparable: Ryzen 3.",m:3},
-{t:"Intel Core i9 (Table 3-2)",d:"Introduced 2017; 10–18 cores; 2.6–4 GHz; 8 GT/s bus; 13–25 MB L3 cache. AMD comparable: Ryzen 9.",m:3},
-{t:"Haswell microarchitecture",d:"An Intel microarchitecture released in 2013 (example: the Intel Core i7-5820 Haswell-E, a six-core CPU at 3.3 GHz).",m:3},
-{t:"Cascade Lake-AP",d:"The most current Intel microarchitecture mentioned (released 2019) for the Xeon server line — up to 56 cores at 2.6 GHz with up to 77 MB L3 cache.",m:3},
-{t:"lscpu (Linux command)",d:"Displays a summary of the CPU's architecture in Linux.",m:3},
-{t:"/proc/cpuinfo",d:"A Linux file (viewed with commands like \"less /proc/cpuinfo\") containing detailed information about each processor/core.",m:3},
-{t:"top (Linux command)",d:"An interactive, real-time task manager in a terminal window; shows top CPU-using processes and can toggle to thread view.",m:3},
-{t:"pstree (Linux command)",d:"Shows a snapshot of the hierarchy (tree) of running processes in Linux.",m:3},
-{t:"cpuid (Linux command)",d:"A command (not installed by default on Fedora 30) that shows very detailed information about the processor and its capabilities.",m:3},
-{t:"system_profiler (macOS command)",d:"A macOS terminal command that reports detailed system/hardware information, including processor details.",m:3},
-{t:"Get-WmiObject win32_processor",d:"A Windows PowerShell command used to retrieve detailed processor properties (address/data bus width, revision, architecture, etc.).",m:3},
+// ---- SINGLE-USER, MULTIUSER & REAL-TIME OSS ----
+{t:"Single-user operating system",d:"Allows only one user at a time to interact with the OS UI, start processes, and access the file system directly (e.g., Windows 10, iOS, Android).",m:1,g:"m1-users"},
+{t:"Remote Desktop Protocol (RDP)",d:"A protocol allowing a user to remotely sign in to a Windows 10 system — but only if no user is signed in at the local console.",m:1,g:"m1-users"},
+{t:"Multiuser operating system",d:"Allows multiple users to sign in, start/stop processes, use the UI, and access the local file system simultaneously (e.g., Linux/UNIX, Windows Server via RDP).",m:1,g:"m1-users"},
+{t:"General-purpose operating system",d:"Designed to provide a convenient UI and run business, productivity, or entertainment apps with reasonable (not guaranteed) performance.",m:1,g:"m1-users"},
+{t:"Real-time operating system (RTOS)",d:"Designed to process inputs and produce outputs in a very specific, repeatable amount of time (e.g., VxWorks, QNX, LynxOS, Windows 10 IoT).",m:1,g:"m1-users"},
+{t:"Deterministic",d:"Describes components of a real-time system (like network/storage) for which worst-case response times can be determined under given conditions.",m:1,g:"m1-users"},
+
+// ---- OS ROLES: CLIENT, SERVER & STANDALONE ----
+{t:"The three OS roles",d:"Client, Server, and Standalone.",m:1,g:"m1-roles"},
+{t:"Client operating system",d:"An OS whose primary purpose is to run applications requested by a user and request data from network servers (e.g., Windows 10, macOS, Ubuntu Desktop).",m:1,g:"m1-roles"},
+{t:"Server operating system",d:"An OS whose primary purpose is to share network resources (storage, printers) and provide network services to clients (e.g., Windows Server, UNIX, many Linux distros).",m:1,g:"m1-roles"},
+{t:"Windows Server Core",d:"The default installation of Windows Server — it has no GUI, requiring administrators to use the command-line interface.",m:1,g:"m1-roles"},
+{t:"Standalone operating system",d:"An OS not designed to interact with other OSs or access network resources — most common today in embedded systems.",m:1,g:"m1-roles"},
+
+// ---- FAULT TOLERANCE & SCALABILITY ----
+{t:"Fault tolerance",d:"The ability of a system to recover from a hardware or software failure.",m:1,g:"m1-fault"},
+{t:"Clustering",d:"The ability of two or more servers to act as one, for fault tolerance, load sharing, or both.",m:1,g:"m1-fault"},
+{t:"Failover cluster",d:"A server cluster for fault tolerance: two or more servers share identical configurations and data access; if one fails, another takes over.",m:1,g:"m1-fault"},
+{t:"Load-sharing (load-balancing) cluster",d:"Two or more servers alternate taking client requests to provide faster response times.",m:1,g:"m1-fault"},
+{t:"Hot swapping",d:"Replacing a failed hardware component (disk, memory, processor) without shutting the system down.",m:1,g:"m1-fault"},
+{t:"Hot adding",d:"Adding new components (storage, RAM, processors) to a running system, supporting scalability.",m:1,g:"m1-fault"},
+
+// ---- BOOT PROCESS & FIRMWARE ----
+{t:"Boot procedure — 6 steps",d:"1) Power applied 2) CPU starts 3) CPU executes firmware startup routines 4) OS is located by firmware 5) OS loaded into RAM 6) OS processes/services are started.",m:1,g:"m1-boot"},
+{t:"Firmware",d:"Program code stored in non-volatile memory on hardware; performs diagnostic tests and boots the OS.",m:1,g:"m1-boot"},
+{t:"Non-volatile memory",d:"Memory that keeps its contents even when no power is applied (e.g., flash memory, EEPROM).",m:1,g:"m1-boot"},
+{t:"Bootstrap",d:"The initial program contained in firmware that locates and loads the bootloader program.",m:1,g:"m1-boot"},
+{t:"Bootloader",d:"The program (loaded by the bootstrap) responsible for loading the initial process that makes up the operating system.",m:1,g:"m1-boot"},
+{t:"BOOTMGR (Windows Boot Manager)",d:"The Windows bootloader used from Windows Vista onward (NTLDR was used in older Windows).",m:1,g:"m1-boot"},
+{t:"GRUB / LILO",d:"GRUB (GRand Unified Bootloader) and LILO (LInux LOader) — common bootloaders used by Linux systems.",m:1,g:"m1-boot"},
+{t:"BIOS (basic input/output system)",d:"Firmware residing on a motherboard chip that initializes I/O devices, runs POST, and locates/loads the OS.",m:1,g:"m1-boot"},
+{t:"UEFI",d:"Unified Extensible Firmware Interface — the newer form of firmware used on modern PCs in place of legacy BIOS.",m:1,g:"m1-boot"},
+{t:"Power-on self-test (POST)",d:"Tests performed by the BIOS at startup, such as memory and hardware component tests.",m:1,g:"m1-boot"},
+{t:"CMOS chip",d:"A low-power memory chip (CMOS: Complementary Metal-Oxide-Semiconductor), powered by a small battery, that stores the BIOS configuration.",m:1,g:"m1-boot"},
+
+// ---- CPU MODES & PROCESS BASICS ----
+{t:"Kernel mode (privileged mode)",d:"A CPU mode in which a process has unrestricted access to hardware and can execute privileged CPU instructions.",m:1,g:"m1-cpumode"},
+{t:"User mode",d:"A CPU mode in which a process can only access memory allocated to it, must ask the OS for I/O access, and cannot run privileged instructions.",m:1,g:"m1-cpumode"},
+{t:"Process ID (PID)",d:"A unique identifier assigned to a process when created, used to communicate with or manage it.",m:1,g:"m1-cpumode"},
+{t:"ps (Linux command)",d:"Lists the processes you've started in Linux, including their PIDs.",m:1,g:"m1-cpumode"},
+{t:"kill PID (Linux command)",d:"Terminates a process by its process ID.",m:1,g:"m1-cpumode"},
+{t:"Four ways a process is created",d:"1) By the bootloader 2) Through a request by the OS 3) By another process (parent/child) 4) By a user.",m:1,g:"m1-cpumode"},
+{t:"Parent process / child process",d:"When a process creates another process, the creator is the parent and the new process is the child.",m:1,g:"m1-cpumode"},
+
+// ---- STARTUP SEQUENCE: WINDOWS & LINUX ----
+{t:"systemd (or init)",d:"On Linux, the first user mode process started at boot; responsible for starting most other user mode processes.",m:1,g:"m1-startup"},
+{t:"Windows Session Manager loads...",d:"...wininit and winlogon after kernel mode processes and device drivers are loaded.",m:1,g:"m1-startup"},
+{t:"wininit",d:"Starts most of the services configured to start when Windows boots.",m:1,g:"m1-startup"},
+{t:"winlogon",d:"Handles the Windows user logon procedure, calls lsass to verify credentials, and starts the Desktop Window Manager (dwm).",m:1,g:"m1-startup"},
+{t:"lsass",d:"The authentication service used on Windows to verify user credentials.",m:1,g:"m1-startup"},
+{t:"Desktop Window Manager (dwm)",d:"The process that manages much of the Windows 10 user interface.",m:1,g:"m1-startup"},
+{t:"Device driver",d:"Usually a kernel mode process that accesses hardware devices directly on behalf of user mode or other kernel mode processes.",m:1,g:"m1-startup"},
+{t:"File handle",d:"An identifier for a file containing all the information the file system needs to locate and access that file.",m:1,g:"m1-startup"},
+
+// ---- I/O HANDLING & INTERRUPTS ----
+{t:"Polling",d:"An I/O handling method where the OS checks each device one after another, round-robin, to see if it needs attention — generally inefficient.",m:1,g:"m1-io"},
+{t:"Interrupt",d:"A signal, usually generated by an I/O device, that alerts the CPU/OS that a device needs attention.",m:1,g:"m1-io"},
+{t:"Interrupt request (IRQ) line",d:"A pin on the CPU that changes state when a hardware interrupt signal is generated.",m:1,g:"m1-io"},
+{t:"Interrupt service routine (ISR)",d:"Also called an interrupt handler; the code executed when an interrupt occurs — calls the relevant device driver.",m:1,g:"m1-io"},
+{t:"Interrupt masking",d:"ISRs turn off interrupts of equal or lower priority while they run, to prevent unnecessary interruptions.",m:1,g:"m1-io"},
+{t:"Non-maskable interrupt (NMI)",d:"A class of interrupt that cannot be turned off; reserved for error conditions like divide-by-zero or memory errors.",m:1,g:"m1-io"},
+{t:"Trap",d:"A software interrupt, generated by user mode programs when they need immediate kernel services.",m:1,g:"m1-io"},
+
+// ---- SECURITY & KERNEL IDENTITY ----
+{t:"Authentication",d:"Verifies that an account trying to access a system is valid and has provided valid credentials.",m:1,g:"m1-security"},
+{t:"Authorization",d:"Verifies that an authenticated account has permission to perform a specific action, like opening a file.",m:1,g:"m1-security"},
+{t:"ntoskrnl.exe",d:"The name of the kernel file in Windows systems.",m:1,g:"m1-security"},
+{t:"XNU (X is Not Unix)",d:"The name of the kernel used in macOS.",m:1,g:"m1-security"},
+{t:"uname -sr",d:"The Linux command used to determine kernel information (name and release).",m:1,g:"m1-security"},
+
+// ---- OS HISTORY & FLAVORS ----
+{t:"Multics",d:"Widely considered to be the first multiuser, multitasking operating system; ran on PDP series computers and led to UNIX.",m:1,g:"m1-history"},
+{t:"UNIX (original)",d:"Developed at AT&T Bell Labs in 1969 by Kenneth Thompson and Dennis Ritchie as an improvement on Multics.",m:1,g:"m1-history"},
+{t:"BASIC",d:"Beginner's All-purpose Symbolic Instruction Code — a simple programming language developed at Dartmouth College aimed at nonprogrammers.",m:1,g:"m1-history"},
+{t:"MS-DOS",d:"Microsoft Disk Operating System — evolved in 1980 from 86-DOS (originally QDOS), a command-line OS that became a runaway success for Microsoft.",m:1,g:"m1-history"},
+{t:"QDOS",d:"The Quick and Dirty Operating System written by Tim Paterson for the 8086 processor; evolved into 86-DOS and then MS-DOS.",m:1,g:"m1-history"},
+{t:"Apple Macintosh (1984)",d:"The first widely distributed OS that was totally graphical in its user interface; also introduced use of the mouse to PC-based systems.",m:1,g:"m1-history"},
+{t:"Windows 3.0 (1990)",d:"The first usable version of a graphical operating system for the PC.",m:1,g:"m1-history"},
+{t:"Windows NT (1993)",d:"Microsoft's first true 32-bit, preemptive multitasking OS with integrated networking; later offered in Workstation and Server versions.",m:1,g:"m1-history"},
+{t:"Windows 95",d:"Mostly 32-bit upgrade to Windows 3.x with improved UI and native 32-bit app support; it was still backward compatible with 16-bit apps.",m:1,g:"m1-history"},
+{t:"Linux kernel 0.01 (1991)",d:"Linus Torvalds made the very first version of Linux available for download via FTP.",m:1,g:"m1-history"},
+{t:"OS/2 (1987)",d:"IBM operating system jointly developed with Microsoft; required extensive hardware and could not run older MS-DOS applications, so it was not a big hit.",m:1,g:"m1-history"},
+{t:"Windows Server 2016",d:"Emphasizes virtualization, flexible storage, and cloud computing; introduced Nano Server and Microsoft's first support for containers.",m:1,g:"m1-history"},
+{t:"GNOME 1.0 desktop (1999)",d:"Became available as free software and grew to become one of the most popular UNIX/Linux desktops.",m:1,g:"m1-history"},
+{t:"SVR4 vs. BSD",d:"The two main design standards for the many \"flavors\" of UNIX: System V Release 4 and the Berkeley Software Distribution.",m:1,g:"m1-history"},
+{t:"SAMBA",d:"The Linux equivalent of \"Client for Microsoft Networks,\" used for accessing shared Windows files/printers.",m:1,g:"m1-history"},
+{t:"Network File System (NFS)",d:"Linux's native file sharing protocol.",m:1,g:"m1-history"},
+
+// ---- INTERFACES & TERMINOLOGY ----
+{t:"Client vs. server performance tuning",d:"Client OSs are tuned for foreground \"Programs\"; server OSs (like Windows Server) are tuned for \"Background services.\"",m:1,g:"m1-interfaces"},
+{t:"Command-line interface",d:"An interface where users type commands instead of using a GUI's point-and-click method (e.g., original MS-DOS, PowerShell, a Linux shell).",m:1,g:"m1-interfaces"},
+{t:"Graphical user interface (GUI)",d:"An interface allowing users to interact by pointing, clicking, or touching icons/menus rather than typing commands. First widely popularized by the 1984 Macintosh.",m:1,g:"m1-interfaces"},
+{t:"Computer hardware",d:"The physical components of a computer (CPU, memory, disk, video card, etc.) that are controlled and coordinated by the operating system.",m:1,g:"m1-interfaces"},
+{t:"Scalability",d:"A system's ability to grow — for example, supporting hot adding of storage, RAM, or processors while running.",m:1,g:"m1-interfaces"},
+{t:"\"Job\" (legacy term)",d:"The old name for a process, dating back to when systems were single-tasking and ran programs one after another (batch processing).",m:1,g:"m1-interfaces"},
+{t:"\"Task\" (as in Task Manager)",d:"Another term for a process — Windows' Task Manager is literally a process manager.",m:1,g:"m1-interfaces"},
+{t:"Windows Virtual Desktop",d:"A Microsoft Azure feature that provides a true multiuser version of Windows 10 (outside of this, Windows 10 is single-user).",m:1,g:"m1-interfaces"},
+{t:"Novell NetWare",d:"An older network server OS that early standalone PCs (like MS-DOS machines) were sometimes upgraded with a network card to connect to.",m:1,g:"m1-interfaces"},
+
+// ---- SUPPORT LIFECYCLES ----
+{t:"Windows 7 end of life",d:"January 2020 — Microsoft discontinued support (including security updates) for Windows 7.",m:1,g:"m1-lifecycle"},
+{t:"Windows Server 2008 / 2012 support",d:"Support for Windows Server 2008 ended in January 2020; support for Windows Server 2012 was scheduled to end in October 2023.",m:1,g:"m1-lifecycle"},
+{t:"Windows 10 version 1903",d:"The Windows 10 build (released March 2019) that the module's feature descriptions and screenshots are based on.",m:1,g:"m1-lifecycle"},
+
+// ---- WINDOWS MANAGEMENT TOOLS ----
+{t:"Process Explorer",d:"A free Sysinternals utility (downloadable from Microsoft) that shows a graphical process tree on Windows systems.",m:1,g:"m1-tools"},
+{t:"Task Manager",d:"A Windows GUI tool for viewing and managing running processes, performance data, and startup programs.",m:1,g:"m1-tools"},
+{t:"Resource Monitor",d:"A Windows tool (opened from Task Manager) showing detailed CPU, memory, disk, and network usage per process.",m:1,g:"m1-tools"},
+{t:"Active Directory",d:"Microsoft's directory service, an example of a service commonly bundled with a server OS.",m:1,g:"m1-tools"},
+{t:"DHCP client / DNS client",d:"Networking components preinstalled on client OSs: DHCP (Dynamic Host Configuration Protocol) automatically gets an IP address, and DNS (Domain Name System) resolves names.",m:1,g:"m1-tools"},
+
+// ---- EARLY MS-DOS VERSIONS ----
+{t:"MS-DOS 1.0 (1981)",d:"Microsoft's original OS for the IBM PC platform; often just called DOS. Supported only 5.25-inch floppy disks storing 320K.",m:2,g:"m2-dos"},
+{t:"PC DOS",d:"The version of MS-DOS that ran on early IBM computers, customized and marketed by IBM (vs. Microsoft-branded MS-DOS used on PC clones).",m:2,g:"m2-dos"},
+{t:"MS-DOS 2.0 (1983)",d:"Supported a 10 MB hard disk on the IBM PC-XT and 360K floppies; required a minimum of 28K RAM (up from 14K in MS-DOS 1.0).",m:2,g:"m2-dos"},
+{t:"MS-DOS 3.1 (1984)",d:"First DOS version to support the network redirector, letting a shared folder be accessed as a drive letter. Also introduced Microsoft Network (MS-Net), which gained little traction against Novell NetWare.",m:2,g:"m2-dos"},
+{t:"Network redirector",d:"A feature (introduced in MS-DOS 3.1) that allows a network resource, like a shared folder, to be accessed as a drive letter.",m:2,g:"m2-dos"},
+{t:"MS-DOS 6.22",d:"The last version of MS-DOS released as a separate product; later versions were embedded as the underlying OS for Windows 95, 98, and ME.",m:2,g:"m2-dos"},
+
+// ---- EARLY WINDOWS GUI ----
+{t:"Windows (1983/1985)",d:"Announced in 1983, released in 1985. Early Windows was really just a graphical application with mouse support running on top of MS-DOS — not multitasking.",m:2,g:"m2-earlygui"},
+{t:"Windows 3.1 (1992)",d:"The first popular, usable Microsoft GUI; still built on MS-DOS and did not support real multitasking, only task-switching.",m:2,g:"m2-earlygui"},
+{t:"Task-switching",d:"A process where the system gives control to whichever window/program was just clicked, but only that foreground task gets CPU time — used in Windows 3.1 (not true multitasking).",m:2,g:"m2-earlygui"},
+{t:"Windows for Workgroups (WfW) 3.1/3.11 (1993)",d:"Added built-in networking, enhanced network drivers, and a TCP/IP protocol stack. WfW 3.11 ran only in 80386 enhanced mode, making it faster/more reliable.",m:2,g:"m2-earlygui"},
+
+// ---- WINDOWS 95 & 98 ERA ----
+{t:"Windows 95",d:"Introduced the Start Menu/taskbar desktop that became the standard look for all future Windows; a hybrid 16-bit/32-bit OS that eliminated the 640 KB memory limit.",m:2,g:"m2-win95"},
+{t:"Windows 95's new features",d:"The Windows desktop, Plug and Play, ActiveX/COM, the registry, multitasking & multithreading, and enhanced network/Internet capabilities.",m:2,g:"m2-win95"},
+{t:"Plug and Play (PnP)",d:"A Windows 95 hardware feature that lets the OS automatically detect and configure newly installed hardware, replacing manual switch/jumper configuration.",m:2,g:"m2-win95"},
+{t:"ActiveX / Component Object Model (COM)",d:"A Microsoft technology (and its parent standard) providing a standardized way for objects — programs, files, printers, windows — to communicate with each other.",m:2,g:"m2-win95"},
+{t:"The registry (Windows 95+)",d:"A hierarchical database storing OS configuration, driver info, software/hardware settings, performance info, and desktop configuration — replacing scattered config files.",m:2,g:"m2-win95"},
+{t:"Task supervisor",d:"A Windows 95 feature that detects processes that appear stuck (hung tasks) and lets you close them without restarting the whole OS.",m:2,g:"m2-win95"},
+{t:"Hung task",d:"A process/task that no longer responds to keyboard or mouse input.",m:2,g:"m2-win95"},
+{t:"Multithreading (Windows 95)",d:"Windows 95 was the first Microsoft OS to support multithreading — a CPU executing separate parts of a process at the same time.",m:2,g:"m2-win95"},
+{t:"Windows 98 — Active Desktop",d:"A Windows 98 feature letting you view desktop items as a Web page; discontinued starting with Windows XP Professional 64-bit Edition.",m:2,g:"m2-win95"},
+{t:"Windows 98 — USB support",d:"Windows 98 added support for newer hardware standards including Universal Serial Bus (USB) 1.0.",m:2,g:"m2-win95"},
+{t:"Windows Millennium Edition (Me)",d:"Developed for home users (not office/professional); introduced Universal Plug and Play (UPnP), a set of protocols for auto-discovering/configuring network devices.",m:2,g:"m2-win95"},
+
+// ---- WINDOWS NT FUNDAMENTALS ----
+{t:"Windows NT",d:"\"Windows New Technology,\" first announced 1991 for high-end workstations/servers after Microsoft and IBM ended their OS/2 collaboration. Kernel runs in privileged mode.",m:2,g:"m2-nt"},
+{t:"ntoskrnl.exe (ntoskernel)",d:"The core kernel file for Windows NT and all Windows OSs starting with Windows 2000. The kernel for Windows 9x/ME was krnl386.exe instead.",m:2,g:"m2-nt"},
+{t:"Windows NT 3.1",d:"There were no earlier NT versions — NT started life as version 3.1 (announced 1991, released July 1993).",m:2,g:"m2-nt"},
+{t:"Windows NT 4.0",d:"The first widely successful version of Windows NT, released around the same time as Windows 95, sporting the Windows 95 look.",m:2,g:"m2-nt"},
+{t:"Windows NT Workstation vs. Windows NT Server",d:"NT Workstation was a stable, secure graphical OS for end users; NT Server was a multiuser server OS for Windows and other OS clients.",m:2,g:"m2-nt"},
+{t:"Windows NT networking protocols",d:"Supported TCP/IP (Internet standard), NetBEUI (proprietary Windows file sharing), IPX/SPX (Novell NetWare), DLC (IBM mainframes), and AppleTalk (Apple computers).",m:2,g:"m2-nt"},
+{t:"C2 security rating",d:"Windows NT 4.0 Server received a C2 top-secret U.S. government security rating covering file/folder protection, accounts & passwords, auditing, and access controls.",m:2,g:"m2-nt"},
+{t:"Domain (Windows NT)",d:"An administrative and security boundary within which all member computers are subject to common administrative and security policies.",m:2,g:"m2-nt"},
+{t:"Primary domain controller (PDC)",d:"In a Windows NT domain, the one server responsible for keeping all usernames/passwords; other servers requested info from it. Precursor to Active Directory.",m:2,g:"m2-nt"},
+{t:"Single sign-on",d:"A feature of the Windows NT domain model letting a user sign on once and gain access to any computer that's a member of the domain.",m:2,g:"m2-nt"},
+{t:"NTFS (New Technology File System)",d:"Introduced in Windows NT; provides file- and folder-level permissions. Still the primary file system on all Windows OSs.",m:2,g:"m2-nt"},
+{t:"Windows on Windows (WOW) / NTVDM",d:"A Windows NT subsystem that lets 16-bit applications run preemptively multitasked in a virtual DOS environment (NT Virtual DOS Machine), reducing freezes.",m:2,g:"m2-nt"},
+
+// ---- WINDOWS 2000 & ACTIVE DIRECTORY ----
+{t:"Windows 2000",d:"Built on Windows NT technology; kernel rewrite ran ~30% faster, added VPN support, driver signing, and introduced Active Directory.",m:2,g:"m2-2000"},
+{t:"Virtual private network (VPN)",d:"A private network providing authentication and encryption while running over a non-secure network like the Internet, introduced with Windows 2000.",m:2,g:"m2-2000"},
+{t:"Driver signing",d:"A Windows 2000 feature ensuring device drivers can't be inadvertently overwritten by earlier versions and only certified drivers can be installed.",m:2,g:"m2-2000"},
+{t:"Active Directory",d:"Introduced in Windows 2000 Server; the core service/database of a Windows domain, providing single-point user authentication/authorization and resource management via organizational units.",m:2,g:"m2-2000"},
+{t:"Organizational units",d:"Folders within Active Directory used to organize resources hierarchically, much like a file system organizes files in folders/subfolders.",m:2,g:"m2-2000"},
+{t:"Domain controller (DC) — Windows 2000 change",d:"Unlike NT's single read/write PDC + read-only BDCs, every Windows 2000 DC could create and change Active Directory info; DCs synchronize via replication.",m:2,g:"m2-2000"},
+{t:"Backup domain controller (BDC)",d:"In Windows NT Server 4.0, a server holding a read-only copy of account/security info as a backup to the PDC.",m:2,g:"m2-2000"},
+{t:"Replication",d:"The process by which domain controllers periodically synchronize Active Directory information with each other.",m:2,g:"m2-2000"},
+{t:"Kerberos",d:"A security system/authentication protocol (added in Windows 2000) providing mutual authentication between client and server using encrypted tickets instead of sending passwords across the network.",m:2,g:"m2-2000"},
+{t:"IntelliMirror",d:"A Windows 2000 concept enabling clients to access the same desktop settings/apps/files anywhere; enabled roaming profiles, folder redirection, and offline files.",m:2,g:"m2-2000"},
+{t:"Windows 2000 editions",d:"Server, Advanced Server, and Datacenter Server, differing mainly in CPU/memory support; Advanced/Datacenter also supported server clustering.",m:2,g:"m2-2000"},
+
+// ---- WINDOWS XP & SERVER 2003 ----
+{t:"Windows XP & Windows Server 2003",d:"The two products Windows 2000 evolved into, both built on the Windows 2000 kernel; XP was the desktop version, Server 2003 the server version.",m:2,g:"m2-xp"},
+{t:"Activation",d:"A mechanism to prevent software piracy, first required by Windows XP; the OS could be activated online or by phone, with the code linked to a specific computer.",m:2,g:"m2-xp"},
+{t:"Windows XP Professional",d:"Intended for office/professional use; supported multiple user accounts and could act as a small server for up to 10 users, like Windows 2000 Professional.",m:2,g:"m2-xp"},
+{t:"Windows Server 2003/R2 new features",d:"XP-style GUI, faster Active Directory logon, hundreds of new group policies, 64-bit Itanium support, Remote Desktop management, Terminal Services, and .NET runtime.",m:2,g:"m2-xp"},
+{t:"Distributed File System (DFS)",d:"A valuable Windows Server 2003 R2 feature (along with clustered servers and group policies) for managing files across an enterprise network.",m:2,g:"m2-xp"},
+
+// ---- WINDOWS VISTA & 7 ----
+{t:"Windows 7",d:"Released after Windows Vista; known for simply \"working,\" with faster performance (~1/3 faster than XP/2000), enhanced search, and the Aero desktop presentation.",m:2,g:"m2-vista7"},
+{t:"Windows Vista",d:"The version between XP and 7; poorly received due to early reliability/driver problems, quickly followed by Windows 7 to mitigate reputation damage.",m:2,g:"m2-vista7"},
+{t:"Aero",d:"Windows 7's \"unified presentation subsystem\" desktop (Authentic, Energetic, Reflective, Open) offering consistent window design and 3D \"Glass\" visual effects.",m:2,g:"m2-vista7"},
+{t:"User Account Protection (UAP) / User Account Control (UAC)",d:"Introduced in Windows Vista; warns users when apps/tools are about to change critical system settings, limiting the risk of running everything as administrator.",m:2,g:"m2-vista7"},
+{t:"Windows Service Hardening (WSH)",d:"A Windows 7 feature that restricts a service (like FTP) from performing activities in critical OS structures, limiting damage if that service is compromised.",m:2,g:"m2-vista7"},
+{t:"Connection security rules / IPsec",d:"Group policy rules ensuring communication sessions between clients/servers are authenticated and encrypted using the IP Security (IPsec) protocol suite.",m:2,g:"m2-vista7"},
+
+// ---- WINDOWS SERVER 2008 ----
+{t:"Windows Server 2008 new features",d:"Read-only domain controller, failover & load-balancing clusters, Hyper-V, self-healing NTFS, Server Core, PowerShell, and Server Manager.",m:2,g:"m2-2008"},
+{t:"Read-only domain controller (RODC)",d:"A domain controller (Windows Server 2008) where domain changes can't be initiated locally — changes are written elsewhere and replicated to it. Good for low-security branch offices.",m:2,g:"m2-2008"},
+{t:"Failover cluster",d:"Two or more tightly linked servers where one is active and others are standby; if the active server fails, a standby takes over providing services.",m:2,g:"m2-2008"},
+{t:"Network load-balancing (NLB) cluster",d:"A server configuration where servers share the load of incoming requests for scalability and fault tolerance; best for TCP/IP apps like Web servers, not database/file/print apps.",m:2,g:"m2-2008"},
+{t:"Hyper-V",d:"Microsoft's hypervisor service (introduced Windows Server 2008) allowing Windows Server to host multiple isolated virtual machines on one physical server.",m:2,g:"m2-2008"},
+{t:"Self-healing NTFS",d:"A Windows Server 2008 feature where Chkdsk-style repairs run in the background rather than requiring the whole volume to go offline.",m:2,g:"m2-2008"},
+{t:"Server Core",d:"A bare-bones Windows Server installation with a limited GUI, managed via command prompt/PowerShell, reducing the attack surface. Default install option since Server 2016/2019.",m:2,g:"m2-2008"},
+{t:"PowerShell",d:"A powerful command-line interface and scripting language (standard since Windows Server 2008) using verb-noun \"cmdlets\" like Get-Help or Set-User.",m:2,g:"m2-2008"},
+{t:"Server Manager",d:"A tool that combines/replaces older wizards, centralizing server setup, deployment, role management, and status checks in one location.",m:2,g:"m2-2008"},
+
+// ---- WINDOWS 8 & SERVER 2012 ----
+{t:"Windows 8/8.1",d:"Released Oct 2012 (8.1 in Oct 2013); intended to unify UI/code base across touch and desktop devices. The touch-centric interface (and missing Start button) was poorly received.",m:2,g:"m2-2012"},
+{t:"Storage Spaces",d:"A Windows 8 storage management tool letting users/admins pool disks of different sizes/interfaces into a single storage pool, creating virtual disks/volumes.",m:2,g:"m2-2012"},
+{t:"Client Hyper-V",d:"Brought Hyper-V virtualization to Windows client OSs starting with Windows 8, letting you run older Windows versions in a VM alongside the host OS.",m:2,g:"m2-2012"},
+{t:"Windows Server 2012",d:"Microsoft's deep dive into the private cloud; editions are Standard, Datacenter, Essentials (25 users or fewer), and Foundation (OEM-only, 15 users).",m:2,g:"m2-2012"},
+{t:"Minimal Server Interface (MinShell)",d:"A happy medium between Server Core and the full GUI, letting users perform most local management tasks with a GUI tool but lacking the full interface.",m:2,g:"m2-2012"},
+{t:"Resilient File System (ReFS)",d:"A file system introduced in Windows Server 2012 for large, highly reliable data storage; backward-compatible with NTFS but lacks features like file compression, disk quotas, and EFS.",m:2,g:"m2-2012"},
+{t:"Dynamic Access Control (DAC)",d:"Gives fine-tuned control over shared resources based on user attributes/file classification rather than only group-based permissions.",m:2,g:"m2-2012"},
+
+// ---- WINDOWS 10 & SERVER 2016/2019 ----
+{t:"Windows 10",d:"Released July 2015 (jumping from 8.1, skipping \"9\"); may be the last numbered Windows release, with regular feature updates (e.g., v1507, v1903) instead of new version names.",m:2,g:"m2-2016"},
+{t:"Virtual desktops (Windows 10)",d:"Let users create multiple desktops and switch between them to organize open application windows — a feature long available on Linux desktop managers.",m:2,g:"m2-2016"},
+{t:"Cortana",d:"Windows 10's digital assistant (like Siri/Google Assistant), requiring a Microsoft account; accessed via the search bar, used for voice commands, reminders, and questions.",m:2,g:"m2-2016"},
+{t:"Windows Hello",d:"A Windows 10 sign-in feature letting you use facial recognition or a fingerprint (with compatible hardware) instead of just a password or PIN.",m:2,g:"m2-2016"},
+{t:"Windows Sandbox",d:"First available in Windows 10 v1903; a temporary, isolated desktop environment for running untrusted/experimental apps without affecting the host OS. Needs 4 GB RAM & 2 cores.",m:2,g:"m2-2016"},
+{t:"Windows Server 2016",d:"Comes with the Windows 10 UI; introduced Nano Server and expanded virtualization with Windows Server Containers and Hyper-V Containers.",m:2,g:"m2-2016"},
+{t:"Nano Server",d:"A Windows Server 2016 install option even smaller than Server Core, with no local logon (remote management only); can only run in a Windows container starting with version 1709.",m:2,g:"m2-2016"},
+{t:"Windows Containers",d:"Server 2016's two container options: Windows Server Containers (moderate isolation, shared kernel) and Hyper-V Containers (VM-level isolation without full VM overhead).",m:2,g:"m2-2016"},
+{t:"Windows Server 2019",d:"Focuses on hybrid cloud datacenters, security, and hyper-converged infrastructure (HCI); introduced Windows Admin Center and deeper Linux integration (WSL, encrypted Linux VMs).",m:2,g:"m2-2016"},
+{t:"Windows Admin Center (WAC)",d:"A browser-based management console (introduced in Server 2019) for managing servers, clusters, Windows 10 clients, and HCI, with tight Azure integration.",m:2,g:"m2-2016"},
+{t:"Hyper-converged infrastructure (HCI)",d:"A computing model where virtualization extends beyond VMs to virtual storage networks and virtualized networking, all software-defined rather than hardware-defined.",m:2,g:"m2-2016"},
+{t:"Windows Defender ATP",d:"Windows Defender Advanced Threat Protection; adds Exploit Guard, an intrusion prevention feature that can lock down a server under attack and alert an administrator.",m:2,g:"m2-2016"},
+
+// ---- UNIX & LINUX ----
+{t:"UNIX",d:"The oldest, most diverse, and most complex OS covered — no single company holds an exclusive license, so many diverse \"flavors\" with diverse utilities exist.",m:2,g:"m2-unix"},
+{t:"BSD vs. SVR4",d:"The two main UNIX design standards: Berkeley Software Distribution (e.g., FreeBSD, NetBSD, macOS/Darwin) and System V Release 4 (e.g., many Linux distros, Solaris).",m:2,g:"m2-unix"},
+{t:"Linux",d:"\"UNIX-like\" OS based on standards developed after UNIX; runs on Intel/AMD, ARM, and RISC-V processors and is at the heart of many embedded/real-time systems.",m:2,g:"m2-unix"},
+{t:"Linux shells",d:"The user interface for Linux; most popular are the Bourne shell (sh), Bourne Again shell (bash), and C shell (csh, formatted similar to the C language).",m:2,g:"m2-unix"},
+{t:"External commands (Linux)",d:"OS or application programs stored as a separate executable file on disk, called by typing the command name at the shell prompt.",m:2,g:"m2-unix"},
+{t:"X Window (X11)",d:"Provides basic window management for most Linux GUIs; network-enabled, meaning an X terminal can run X Window and its apps remotely on another Linux computer.",m:2,g:"m2-unix"},
+{t:"GNOME / KDE",d:"GNOME (GNU Network Object Model Environment) and KDE (K Desktop Environment) — popular Linux desktop managers that run on top of X Window to provide a rich desktop user interface.",m:2,g:"m2-unix"},
+{t:"Linux terminal window",d:"The Linux GUI's equivalent of a Windows command prompt window, used to access a shell.",m:2,g:"m2-unix"},
+{t:"Linux networking",d:"Based on the BSD networking model, providing TCP/IP support; Linux is the most common OS for Web servers, mail servers, and many Internet-based applications.",m:2,g:"m2-unix"},
+
+// ---- MACOS FOUNDATIONS ----
+{t:"macOS",d:"Built on Darwin, an open-source UNIX-like OS Apple released in 2000; the Mac's all-graphical UI/shell is said to have influenced Windows' look and feel.",m:2,g:"m2-macfound"},
+{t:"Darwin",d:"The open-source, UNIX-like OS (released by Apple in 2000) that macOS is built on.",m:2,g:"m2-macfound"},
+{t:"MultiFinder",d:"A program that gave pre-8.0 Mac OS versions task-switching (not true multitasking); Mac OS 8.0+ made multitasking standard for all applications.",m:2,g:"m2-macfound"},
+{t:"AppleTalk",d:"An older Mac peer-to-peer networking protocol, remaining compatible through Mac OS X Leopard (10.5); no longer supported starting with Mac OS X 10.6 (Snow Leopard).",m:2,g:"m2-macfound"},
+{t:"Mac OS X (\"Aqua\" interface)",d:"Mac OS X (version 10) sported the Aqua interface, the basis for all successive Mac OS X/macOS releases; replaced/removed customization of the old Apple menu.",m:2,g:"m2-macfound"},
+{t:"System Preferences",d:"Mac OS X's tool (similar to Windows Control Panel) for setting time/date, display, startup, energy-saving, and network functions.",m:2,g:"m2-macfound"},
+{t:"Dock",d:"A customizable macOS feature for starting multiple applications and switching between them in a multitasking environment.",m:2,g:"m2-macfound"},
+
+// ---- MACOS VERSION HISTORY ----
+{t:"Mac OS X 10.6 Snow Leopard",d:"The first version of Mac OS X to support only Intel-based processors; a Rosetta download retained support for older PowerPC applications.",m:2,g:"m2-machistory"},
+{t:"Mac OS X 10.7 Lion",d:"Incorporated popular iOS features like Launchpad (browse installed apps) and expanded multi-touch gestures; introduced Mission Control.",m:2,g:"m2-machistory"},
+{t:"Mac OS X 10.8 Mountain Lion",d:"Added support for iMessage, iWork, iCloud, and Notification Center; all software updates moved exclusively to the App Store.",m:2,g:"m2-machistory"},
+{t:"Mac OS X 10.9 Mavericks",d:"Ran on Intel 64-bit processors; first release named after a California location instead of a big cat, adding Maps and iBooks.",m:2,g:"m2-machistory"},
+{t:"Mac OS X 10.10 Yosemite",d:"Gave Mac OS X a flat, iOS 7-based facelift; introduced Handoff, letting you continue work in progress between an iOS device and your Mac.",m:2,g:"m2-machistory"},
+{t:"Mac OS X 10.11 El Capitan",d:"Added Split View (two apps snapped to opposite sides of the screen), updated Spotlight, Pinned Sites, and Metal — a set of 3D development tools.",m:2,g:"m2-machistory"},
+{t:"macOS 10.12 Sierra",d:"Introduced Siri (voice assistant) to the Mac and Optimized Storage, which removes locally-saved iCloud files when storage runs low.",m:2,g:"m2-machistory"},
+{t:"macOS 10.14 Mojave",d:"Added Dark Mode, Dynamic Desktop (changes color scheme through the day), Marzipan (runs select iOS apps on Mac), and Desktop Stacks (auto-groups desktop icons).",m:2,g:"m2-machistory"},
+
+// ---- SYSTEM ARCHITECTURE BASICS ----
+{t:"System architecture",d:"Includes the number/type of CPUs in the hardware, the communication routes (buses) between them, and other hardware like memory and disk storage.",m:3,g:"m3-arch"},
+{t:"Bus",d:"A path or channel between a computer's CPU and the devices it manages, such as memory and I/O devices.",m:3,g:"m3-arch"},
+{t:"Single-processor computer",d:"A computer with just one physical CPU chip (most client computers).",m:3,g:"m3-arch"},
+{t:"Processor core",d:"The part of a CPU that reads and executes machine code, such as reading/writing data or performing arithmetic.",m:3,g:"m3-arch"},
+{t:"Multicore processor",d:"A CPU chip with two or more cores (e.g., dual-core = 2 cores, quad-core = 4 cores).",m:3,g:"m3-arch"},
+{t:"Die",d:"The result of manufacturing a CPU on a silicon wafer — holds all the logic making up the CPU.",m:3,g:"m3-arch"},
+{t:"Multiprocessor computer",d:"A computer (often a server) with multiple separate physical CPUs, ranging from two to 128 or more.",m:3,g:"m3-arch"},
+
+// ---- CPU INTERNALS & REGISTERS ----
+{t:"Reset vector",d:"A memory address a CPU begins reading from whenever it receives a reset signal (e.g., power-on); points to non-volatile memory holding bootloader code.",m:3,g:"m3-internals"},
+{t:"Program counter",d:"A register on a CPU that contains the address of the next instruction the CPU will execute.",m:3,g:"m3-internals"},
+{t:"Control unit (CU)",d:"The \"director of operations\" in the CPU — provides timing and coordination between the ALU, registers, and system bus.",m:3,g:"m3-internals"},
+{t:"Arithmetic logic unit (ALU)",d:"Performs the primary task of a CPU — executing arithmetic (add, multiply) and logic (AND, OR) instructions.",m:3,g:"m3-internals"},
+{t:"Floating-point unit (FPU)",d:"A component found in most CPUs that performs floating-point (decimal) operations.",m:3,g:"m3-internals"},
+{t:"Register",d:"A temporary holding location on a CPU where data must be placed before the CPU can use it.",m:3,g:"m3-internals"},
+{t:"Memory/cache controller",d:"Intercepts memory accesses and checks cache first; if not found there, passes the request to main memory.",m:3,g:"m3-internals"},
+
+// ---- THE SYSTEM BUS (3 TYPES) ----
+{t:"System bus (3 types)",d:"Made up of the control bus, address bus, and data bus, used to communicate between the CPU and RAM/I-O devices.",m:3,g:"m3-bus"},
+{t:"Control bus",d:"Carries status signals — like interrupt signals — between the CPU and other devices.",m:3,g:"m3-bus"},
+{t:"Address bus",d:"Carries address signals indicating where data should be read from or written to in memory.",m:3,g:"m3-bus"},
+{t:"Data bus",d:"Carries the actual data being read from or written to system memory.",m:3,g:"m3-bus"},
+
+// ---- INSTRUCTION SET ARCHITECTURES ----
+{t:"CISC (Complex Instruction Set Computing)",d:"CPU architecture with complex instructions that do a lot of work each (may take several clock cycles); uses microcode.",m:3,g:"m3-isa"},
+{t:"RISC (Reduced Instruction Set Computing)",d:"CPU architecture with simple instructions that each typically take one clock cycle; no microcode, more registers, easier pipelining.",m:3,g:"m3-isa"},
+{t:"Instruction set",d:"The list of machine code commands that a CPU supports.",m:3,g:"m3-isa"},
+{t:"Pipelining",d:"The ability of a CPU to perform more than one task on a single clock cycle — easier and more effective on RISC CPUs.",m:3,g:"m3-isa"},
+{t:"Microcode",d:"A small program inside a CISC chip that interprets and executes each complex instruction; RISC CPUs don't use it.",m:3,g:"m3-isa"},
+{t:"Compiler",d:"A program that takes a high-level language (like C++ or Java) and turns it into assembly code.",m:3,g:"m3-isa"},
+{t:"Assembler",d:"Turns human-readable assembly code instructions into numeric opcodes the CPU can understand.",m:3,g:"m3-isa"},
+{t:"Opcode",d:"The numeric code read by the CPU that represents a particular machine instruction.",m:3,g:"m3-isa"},
+
+// ---- CLOCK SPEED & CACHE ----
+{t:"Internal clock speed",d:"The speed at which a CPU executes an instruction (or part of one) internally; can range from under 1 MHz to over 5 GHz.",m:3,g:"m3-cache"},
+{t:"External clock speed",d:"The (usually lower) speed a CPU uses to communicate with the rest of the computer — often 1/2, 1/3, 1/4, or 1/8 the internal clock speed.",m:3,g:"m3-cache"},
+{t:"Cache memory",d:"Extremely fast memory built into the CPU chip that holds data/instructions likely to be needed next, avoiding slow waits on RAM.",m:3,g:"m3-cache"},
+{t:"Level 1 (L1) cache",d:"The fastest but smallest cache (typically 8–128 KB per core); runs at CPU speed and is always part of the CPU chip.",m:3,g:"m3-cache"},
+{t:"Level 2 (L2) cache",d:"Somewhat slower than L1 but larger (often 256 KB–1 MB per core); also an integral part of the CPU chip.",m:3,g:"m3-cache"},
+{t:"Level 3 (L3) cache",d:"Shared among CPU cores; on modern CPUs is part of the chip; found in sizes of 8 MB, 16 MB, and greater.",m:3,g:"m3-cache"},
+{t:"Level 4 (L4) cache",d:"If present, usually found on the motherboard; some high-end CPUs now include on-board L4 cache up to 128 MB.",m:3,g:"m3-cache"},
+{t:"Cache controller",d:"Specialized hardware that predicts what data will be needed and makes it available in cache before it's needed.",m:3,g:"m3-cache"},
+
+// ---- ADDRESS BUS WIDTHS ----
+{t:"16-bit address bus",d:"Can address 64 KB (65,536 bytes) of memory.",m:3,g:"m3-addr"},
+{t:"32-bit address bus",d:"Can address roughly 4 GB (4 billion bytes) of memory.",m:3,g:"m3-addr"},
+{t:"64-bit address bus",d:"Used by modern processors; allows addressing up to 16 TB of memory.",m:3,g:"m3-addr"},
+
+// ---- SCHEDULING, THREADS & X86 ----
+{t:"CPU scheduling",d:"Determines which process executes when multiple processes are waiting to run — a function of the OS, not the CPU hardware itself.",m:3,g:"m3-sched"},
+{t:"Thread",d:"The smallest block of computer code that can be independently scheduled for execution.",m:3,g:"m3-sched"},
+{t:"Multithreading",d:"The ability of an OS to run two or more threads of a process at the same time.",m:3,g:"m3-sched"},
+{t:"Hyper-threading (HT)",d:"An Intel feature allowing two threads to run on each CPU core simultaneously (a 4-core HT CPU shows as 8 logical processors).",m:3,g:"m3-sched"},
+{t:"x86",d:"Notation indicating compatibility with the Intel 8086 processor architecture used in modern Intel/AMD CPUs.",m:3,g:"m3-sched"},
+{t:"Intel 8086",d:"The CPU architecture found in early PCs; introduced in 1978, originally ran at 16 MHz with a 16-bit data bus.",m:3,g:"m3-sched"},
+{t:"Intel 8088",d:"Used in the original IBM PC; almost identical to the 8086 except its data bus was only 8 bits wide (chosen for lower cost).",m:3,g:"m3-sched"},
+
+// ---- VENDORS & ARCHITECTURE TERMS ----
+{t:"Overclocking",d:"Running a processor faster than its stated/rated clock speed (e.g., running a 3 GHz CPU at 3.3 GHz).",m:3,g:"m3-vendors"},
+{t:"AMD",d:"Advanced Micro Devices — makes CISC processors compatible with Intel x86-based software; tends to cost less and overclock more easily.",m:3,g:"m3-vendors"},
+{t:"ARM (Advanced RISC Machines) processor",d:"RISC processors common in mobile devices, embedded systems, and increasingly servers; the most common processor architecture in the world.",m:3,g:"m3-vendors"},
+{t:"Microarchitecture",d:"The description of a CPU's internal circuitry — defines the chip-making technology, supported instruction set, and bit size.",m:3,g:"m3-vendors"},
+{t:"GT/s (gigatransfers per second)",d:"The unit often used to describe the bus speed of modern multicore CPUs.",m:3,g:"m3-vendors"},
+
+// ---- CPU MODEL FAMILIES ----
+{t:"Intel Core i5 (Table 3-2)",d:"Introduced 2009; 2–4 cores; 1.06–3.76 GHz; 2.5 GT/s bus; 3–8 MB L3 cache. AMD comparable: Ryzen 5.",m:3,g:"m3-models"},
+{t:"Intel Core i7 (Table 3-2)",d:"Introduced 2008; 2–6 cores; 1.06–3.33 GHz; 2.5–4.8 GT/s bus; 4–15 MB L3 cache. AMD comparable: Ryzen 7.",m:3,g:"m3-models"},
+{t:"Intel Core i3 (Table 3-2)",d:"Introduced 2010; 2 cores; 1.20–3.06 GHz; 2.5 GT/s bus; 3–4 MB L3 cache. AMD comparable: Ryzen 3.",m:3,g:"m3-models"},
+{t:"Intel Core i9 (Table 3-2)",d:"Introduced 2017; 10–18 cores; 2.6–4 GHz; 8 GT/s bus; 13–25 MB L3 cache. AMD comparable: Ryzen 9.",m:3,g:"m3-models"},
+{t:"Haswell microarchitecture",d:"An Intel microarchitecture released in 2013 (example: the Intel Core i7-5820 Haswell-E, a six-core CPU at 3.3 GHz).",m:3,g:"m3-models"},
+{t:"Cascade Lake-AP",d:"The most current Intel microarchitecture mentioned (released 2019) for the Xeon server line — up to 56 cores at 2.6 GHz with up to 77 MB L3 cache.",m:3,g:"m3-models"},
+
+// ---- COMMAND-LINE CPU INSPECTION ----
+{t:"lscpu (Linux command)",d:"Displays a summary of the CPU's architecture in Linux.",m:3,g:"m3-cli"},
+{t:"/proc/cpuinfo",d:"A Linux file (viewed with commands like \"less /proc/cpuinfo\") containing detailed information about each processor/core.",m:3,g:"m3-cli"},
+{t:"top (Linux command)",d:"An interactive, real-time task manager in a terminal window; shows top CPU-using processes and can toggle to thread view.",m:3,g:"m3-cli"},
+{t:"pstree (Linux command)",d:"Shows a snapshot of the hierarchy (tree) of running processes in Linux.",m:3,g:"m3-cli"},
+{t:"cpuid (Linux command)",d:"A command (not installed by default on Fedora 30) that shows very detailed information about the processor and its capabilities.",m:3,g:"m3-cli"},
+{t:"system_profiler (macOS command)",d:"A macOS terminal command that reports detailed system/hardware information, including processor details.",m:3,g:"m3-cli"},
+{t:"Get-WmiObject win32_processor",d:"A Windows PowerShell command used to retrieve detailed processor properties (address/data bus width, revision, architecture, etc.).",m:3,g:"m3-cli"},
 ];
-
-const QUIZ = [
-// ---- MODULE 1 ----
-{m:1,q:"Which of the following is NOT one of the five major features an operating system provides?",o:["User interface","Process and service management","Web browser rendering engine","Security and resource protection"],a:2},
-{m:1,q:"A program with no user interface that runs in the background is called a ____ in Windows.",o:["Daemon","Service","Kernel","Thread"],a:1},
-{m:1,q:"What is the Linux equivalent term for a background process with no UI?",o:["Service","Daemon","Shell","Job"],a:1},
-{m:1,q:"Which OS type can execute only a single process at a time?",o:["Multitasking OS","Single-tasking OS","Multiuser OS","Real-time OS"],a:1},
-{m:1,q:"iOS 3 and earlier versions were an example of a:",o:["Multiuser OS","Multitasking OS","Single-tasking OS","Server OS"],a:2},
-{m:1,q:"When did iOS 4 bring multitasking to the iPhone?",o:["November 2010","June 2010","January 2009","March 2011"],a:1},
-{m:1,q:"CP/M, PC-DOS, and MS-DOS were all originally:",o:["Multiuser GUI operating systems","Command-line, single-tasking operating systems","Real-time operating systems","Server-only operating systems"],a:1},
-{m:1,q:"Palm OS was primarily used on which class of device?",o:["Servers","Personal digital assistants (PDAs)","Mainframes","Routers"],a:1},
-{m:1,q:"An embedded system is best described as:",o:["A general-purpose server running many apps","A computing device designed for one specific task","A cloud-based virtual machine","A multiuser mainframe terminal"],a:1},
-{m:1,q:"In cooperative multitasking, when does the OS give CPU control to the next process?",o:["After a fixed time slice, regardless of the current process","Only when the current process terminates or voluntarily yields control","Whenever a higher-priority interrupt occurs","Never — only one process ever runs"],a:1},
-{m:1,q:"Preemptive multitasking gives each process CPU time based on all of the following EXCEPT:",o:["A system interrupt","A higher-priority task needing the CPU","The time-slice timer expiring","The process's file size"],a:3},
-{m:1,q:"Windows used cooperative multitasking until which release?",o:["Windows 95","Windows XP","Windows 3.0","Windows NT"],a:0},
-{m:1,q:"A single-user operating system:",o:["Allows only one user at a time to interact with the OS UI and resources","Can never run more than one process","Is always also a single-tasking OS","Is only found on servers"],a:0},
-{m:1,q:"On Windows 10, a remote user can sign in via RDP only if:",o:["An administrator approves it in real time","No user is currently signed in at the local console","The computer is a member of a domain","Windows Virtual Desktop is disabled"],a:1},
-{m:1,q:"A true multiuser operating system is, by definition, also a:",o:["Single-tasking OS","Standalone OS","Multitasking OS","Real-time OS"],a:2},
-{m:1,q:"A general-purpose operating system is primarily designed to:",o:["Guarantee outputs within an exact, repeatable amount of time","Provide a convenient UI and run apps with reasonable performance","Control robotic assembly lines","Run only on embedded microcontrollers"],a:1},
-{m:1,q:"Which of these is an example of a real-time operating system (RTOS)?",o:["Windows 10","QNX","Ubuntu Desktop","macOS"],a:1},
-{m:1,q:"Components of real-time systems for which worst-case response time can be calculated are called:",o:["Volatile","Deterministic","Preemptive","Asynchronous"],a:1},
-{m:1,q:"Which of the following is NOT one of the three OS roles discussed (client, server, standalone)?",o:["Client","Hybrid","Server","Standalone"],a:1},
-{m:1,q:"The primary purpose of a client operating system is to:",o:["Share network resources like storage and printers with many clients","Run applications requested by a user and request data from servers","Control industrial robots with deterministic timing","Manage a standalone embedded device with no network"],a:1},
-{m:1,q:"The default installation of Windows Server, which has no GUI, is called:",o:["Windows Server Core","Windows Server Essentials","Windows Nano","Windows Server Lite"],a:0},
-{m:1,q:"A standalone operating system is one that:",o:["Runs only on multiprocessor servers","Is not designed to interact with other OSs or access network resources","Requires RDP to be used","Only supports real-time scheduling"],a:1},
-{m:1,q:"The ability of a system to recover from a hardware or software failure is called:",o:["Scalability","Fault tolerance","Clustering","Hot swapping"],a:1},
-{m:1,q:"A failover cluster is designed primarily for:",o:["Load balancing only","Fault tolerance — another server takes over if one fails","Increasing clock speed","Reducing memory usage"],a:1},
-{m:1,q:"Replacing a failed hard disk or memory module without shutting the system down is called:",o:["Hot adding","Clustering","Hot swapping","Polling"],a:2},
-{m:1,q:"Adding more storage, RAM, or processors to a running system to support scalability is called:",o:["Hot swapping","Hot adding","Failover","Load sharing"],a:1},
-{m:1,q:"Put the boot procedure steps in order: which step comes immediately AFTER \"the CPU executes the firmware startup routines\"?",o:["OS processes and services are started","The operating system is located by the firmware","Power is applied to the CPU","The OS is loaded into RAM"],a:1},
-{m:1,q:"Firmware is best described as:",o:["An application installed by the user","Program code stored in non-volatile memory that performs diagnostics and boots the OS","A type of RAM used only for caching","A network protocol used to boot remote computers"],a:1},
-{m:1,q:"The initial program in firmware that locates and loads the bootloader is called the:",o:["Bootstrap","Kernel","POST routine","Reset vector"],a:0},
-{m:1,q:"The Windows bootloader used from Windows Vista onward is called:",o:["NTLDR","GRUB","BOOTMGR","LILO"],a:2},
-{m:1,q:"Which of the following are common Linux bootloaders?",o:["BOOTMGR and NTLDR","GRUB and LILO","BIOS and UEFI","systemd and init"],a:1},
-{m:1,q:"UEFI is best described as:",o:["A newer form of BIOS firmware","A Linux file system","A type of RAM chip","A CPU scheduling algorithm"],a:0},
-{m:1,q:"The BIOS startup test that checks memory and hardware components is called:",o:["CMOS check","Power-on self-test (POST)","Bootstrap validation","Kernel probe"],a:1},
-{m:1,q:"BIOS configuration settings (like RAM amount and storage devices) are stored on a chip called:",o:["CMOS","ROM","L1 cache","EEPROM only"],a:0},
-{m:1,q:"A CPU mode in which a process has unrestricted access to hardware and can run privileged instructions is called:",o:["User mode","Kernel mode","Safe mode","Guest mode"],a:1},
-{m:1,q:"In user mode, a process:",o:["Can execute privileged CPU instructions freely","Can only access memory allocated to it and must ask the OS for I/O access","Always has higher priority than kernel mode processes","Runs before the kernel is loaded"],a:1},
-{m:1,q:"The identifier assigned to a process when it's created, used to manage or communicate with it, is called the:",o:["File handle","Process ID (PID)","Opcode","IRQ"],a:1},
-{m:1,q:"In Linux, which command terminates a process using its process ID?",o:["ps PID","end PID","kill PID","stop PID"],a:2},
-{m:1,q:"Which of these is NOT one of the four ways a process can be created?",o:["By the bootloader","By a user","By formatting the disk","By another process (parent/child)"],a:2},
-{m:1,q:"On Linux, the first user mode process started at boot, responsible for starting most other user mode processes, is:",o:["explorer.exe","systemd (or init)","wininit","dwm"],a:1},
-{m:1,q:"On Windows, which process calls lsass to verify credentials and starts the Desktop Window Manager?",o:["wininit","winlogon","csrss","smss"],a:1},
-{m:1,q:"The Windows service that verifies user credentials during logon is called:",o:["dwm","lsass","wininit","explorer.exe"],a:1},
-{m:1,q:"A device driver is usually described as a:",o:["User mode process with no hardware access","Kernel mode process that accesses hardware directly on behalf of other processes","File system component only","Type of firmware stored in CMOS"],a:1},
-{m:1,q:"An identifier for a file that contains all the info the file system needs to locate/access it is called a:",o:["PID","File handle","Opcode","Reset vector"],a:1},
-{m:1,q:"The I/O handling method where the OS checks each device one after another in round-robin fashion is called:",o:["Interrupt masking","Polling","Pipelining","Multithreading"],a:1},
-{m:1,q:"A signal, usually from an I/O device, alerting the CPU that it needs attention is called a(n):",o:["Trap","Opcode","Interrupt","Reset vector"],a:2},
-{m:1,q:"The code executed when an interrupt occurs, which calls the relevant device driver, is the:",o:["Interrupt service routine (ISR)","Bootloader","Process scheduler","Cache controller"],a:0},
-{m:1,q:"Turning off interrupts of equal or lower priority while an ISR runs is called:",o:["Interrupt masking","Polling","Trapping","Clustering"],a:0},
-{m:1,q:"A type of interrupt that CANNOT be turned off, reserved for conditions like divide-by-zero, is called a(n):",o:["IRQ","Trap","Non-maskable interrupt (NMI)","Opcode"],a:2},
-{m:1,q:"A software interrupt generated by a user mode program needing immediate kernel services is called a:",o:["Trap","POST","NMI","Bootstrap"],a:0},
-{m:1,q:"Verifying that an account trying to access a system has valid credentials is called:",o:["Authorization","Authentication","Clustering","Polling"],a:1},
-{m:1,q:"Verifying that an authenticated account has permission to perform a specific action is called:",o:["Authentication","Authorization","Firmware validation","Scalability"],a:1},
-{m:1,q:"The name of the Windows kernel file is:",o:["ntoskrnl.exe","kernel32.dll","XNU","winlogon.exe"],a:0},
-{m:1,q:"The kernel used in macOS is called:",o:["ntoskrnl","XNU","systemd","BOOTMGR"],a:1},
-{m:1,q:"Which Linux command displays kernel name and release information?",o:["ps -aux","uname -sr","top","lscpu"],a:1},
-{m:1,q:"Which system is widely considered to be the first multiuser, multitasking operating system?",o:["MS-DOS","Multics","CP/M","Windows NT"],a:1},
-{m:1,q:"UNIX was originally developed at AT&T Bell Labs in 1969 by:",o:["Bill Gates and Paul Allen","Kenneth Thompson and Dennis Ritchie","Linus Torvalds","Steve Jobs and Steve Wozniak"],a:1},
-{m:1,q:"BASIC stands for:",o:["Basic Assembly System for Integrated Computing","Beginner's All-purpose Symbolic Instruction Code","Binary Application System Interface Code","Basic Application Single Instruction Compiler"],a:1},
-{m:1,q:"MS-DOS evolved from an operating system originally called:",o:["QDOS (86-DOS)","CP/M","UNIX","VMS"],a:0},
-{m:1,q:"QDOS was originally written by:",o:["Bill Gates","Tim Paterson","Dennis Ritchie","Linus Torvalds"],a:1},
-{m:1,q:"The Apple Macintosh, released in 1984, was significant because it was:",o:["The first single-tasking OS","The first widely distributed, totally graphical OS with mouse support","The first server operating system","The first RTOS"],a:1},
-{m:1,q:"The first usable graphical operating system for the PC was:",o:["MS-DOS 5.0","Windows 3.0","Windows NT","OS/2"],a:1},
-{m:1,q:"Windows NT (1993) was notable as Microsoft's first attempt at:",o:["A single-tasking OS","A true 32-bit, preemptive multitasking OS with integrated networking","A real-time OS for embedded systems","A Linux-compatible kernel"],a:1},
-{m:1,q:"Linus Torvalds made the very first version of Linux (0.01) available for download in what year?",o:["1989","1991","1993","1995"],a:1},
-{m:1,q:"IBM's OS/2, released in 1987, struggled largely because:",o:["It had no GUI at all","It required extensive hardware and could not run older MS-DOS applications","It was never released to the public","It only ran on mainframes"],a:1},
-{m:1,q:"Windows Server 2016 introduced Microsoft's first support for:",o:["Containers","RDP","BIOS firmware","The GUI desktop"],a:0},
-{m:1,q:"The Linux equivalent of Windows' \"Client for Microsoft Networks\" is called:",o:["NFS","SAMBA","GRUB","systemd"],a:1},
-{m:1,q:"Linux's native file sharing protocol is called:",o:["SAMBA","SMB","Network File System (NFS)","CIFS"],a:2},
-{m:1,q:"Client operating systems are typically performance-tuned for:",o:["Background services","Foreground (user) applications","Virtualization hosting only","Real-time deterministic response"],a:1},
-{m:1,q:"An interface where users type commands instead of pointing and clicking is called a:",o:["Graphical user interface","Command-line interface","Touch interface","Kernel interface"],a:1},
-{m:1,q:"The physical components of a computer — CPU, memory, disk, video card — that the OS controls and coordinates are collectively called:",o:["Firmware","Computer hardware","The kernel","The bootloader"],a:1},
-{m:1,q:"A system's ability to grow — e.g., supporting hot adding of storage, RAM, or processors — is called:",o:["Scalability","Fault tolerance","Authentication","Polling"],a:0},
-{m:1,q:"Before the term \"process\" was standard, what was the legacy name for it, dating back to batch-processing systems?",o:["Task","Job","Thread","Daemon"],a:1},
-{m:1,q:"Windows' Task Manager is essentially managing which OS concept, despite the name \"task\"?",o:["Files","Processes","Interrupts","Registers"],a:1},
-{m:1,q:"A true multiuser version of Windows 10 is available only through which Microsoft Azure feature?",o:["Windows Virtual Desktop","Windows Server Core","Active Directory","RDP Premium"],a:0},
-{m:1,q:"Microsoft discontinued support (including security updates) for Windows 7 as of:",o:["January 2020","October 2023","March 2019","June 2010"],a:0},
-{m:1,q:"Support for Windows Server 2012 was scheduled to end in:",o:["January 2020","October 2023","2015","2018"],a:1},
-{m:1,q:"A free Sysinternals utility that shows a graphical process tree on Windows is called:",o:["Resource Monitor","Process Explorer","Device Manager","System Information"],a:1},
-{m:1,q:"Which Microsoft service, mentioned as a typical server OS offering, is an example of a directory service?",o:["Active Directory","Client for Microsoft Networks","SAMBA","NFS"],a:0},
-{m:1,q:"Client OSs typically come preinstalled with the client half of which two networking protocols?",o:["SMTP and POP3","DHCP and DNS","FTP and SSH","HTTP and HTTPS"],a:1},
-
-// ---- MODULE 2 ----
-{m:2,q:"MS-DOS 1.0, Microsoft's original OS for the IBM PC platform, was introduced in what year?",o:["1979","1981","1983","1985"],a:1},
-{m:2,q:"The version of MS-DOS customized and marketed by IBM for early IBM computers was called:",o:["MS-Net","PC DOS","Windows 1.0","QDOS"],a:1},
-{m:2,q:"How much data could a 5.25-inch floppy disk store under MS-DOS 1.0?",o:["144K","320K","360K","1.44 MB"],a:1},
-{m:2,q:"MS-DOS 2.0 (1983) added support for a 10 MB hard disk on which system?",o:["IBM PC-XT","IBM PC-AT","Apple II","Compaq Deskpro"],a:0},
-{m:2,q:"Which MS-DOS version was the first to support the network redirector?",o:["1.0","2.0","3.1","6.22"],a:2},
-{m:2,q:"The network redirector feature allowed:",o:["A shared network folder to be accessed as a drive letter","Multiple users to share one keyboard","Real preemptive multitasking","Automatic hardware detection"],a:0},
-{m:2,q:"Microsoft Network (MS-Net) gained little traction in the 1980s mainly because:",o:["It required a GUI","Novell NetWare was already entrenched in the market","It was never released","It only worked with Apple hardware"],a:1},
-{m:2,q:"MS-DOS 6.22 is significant because it was:",o:["The first version with a GUI","The first version to support networking","The last version of MS-DOS released as a separate product","The version bundled with Windows 95"],a:2},
-{m:2,q:"The first version of Windows was announced in 1983 but not actually released until:",o:["1984","1985","1987","1990"],a:1},
-{m:2,q:"In its earliest days, Windows was best described as:",o:["A true multitasking operating system","A graphical application running on top of MS-DOS","A UNIX-based kernel","A standalone hardware firmware layer"],a:1},
-{m:2,q:"Which Windows release, in 1992, was the first popular, usable Microsoft GUI?",o:["Windows 1.0","Windows 2.0","Windows 3.1","Windows 95"],a:2},
-{m:2,q:"In Windows 3.1's task-switching model:",o:["Every open window received an equal share of CPU time","Only the foreground task received CPU time","Tasks ran only in kernel mode","Tasks were scheduled using preemptive multitasking"],a:1},
-{m:2,q:"Windows for Workgroups (WfW) 3.1, released in 1993, was notable for adding:",o:["Built-in networking support","A 64-bit kernel","Active Directory","Hyper-V virtualization"],a:0},
-{m:2,q:"WfW 3.11 ran only in which mode, making it faster and more reliable?",o:["Real mode","Standard mode","80386 enhanced mode","Safe mode"],a:2},
-{m:2,q:"Which Windows release established the Start Menu/taskbar desktop look used by all future Windows versions?",o:["Windows 3.1","Windows 95","Windows XP","Windows Vista"],a:1},
-{m:2,q:"Windows 95 was best described architecturally as:",o:["A pure 8-bit OS","A hybrid 16-bit/32-bit OS","A pure 64-bit OS","A pure 32-bit OS with no legacy support"],a:1},
-{m:2,q:"Which of the following was NOT one of the new features introduced by Windows 95?",o:["Plug and Play","The registry","Active Directory","Multitasking and multithreading"],a:2},
-{m:2,q:"Plug and Play (PnP), introduced in Windows 95, is best described as:",o:["A feature that automatically detects and configures newly installed hardware","A remote desktop protocol","A file system for removable media","A type of RAID array"],a:0},
-{m:2,q:"ActiveX and its parent standard, the Component Object Model (COM), provide:",o:["A standardized way for objects like programs, files, and printers to communicate","A way to boot from a network","A method for encrypting hard disks","A replacement for the Windows registry"],a:0},
-{m:2,q:"The registry, introduced with Windows 95, is best described as:",o:["A single flat text configuration file","A hierarchical database storing OS, hardware, and software configuration information","A hardware chip that stores BIOS settings","A Linux-only configuration tool"],a:1},
-{m:2,q:"The Windows 95 task supervisor was designed to:",o:["Automatically install device drivers","Detect hung tasks and let you close them without restarting the OS","Manage user account permissions","Schedule automatic Windows updates"],a:1},
-{m:2,q:"A \"hung task\" is best defined as a process that:",o:["Has crashed and removed itself from memory","No longer responds to keyboard or mouse input","Is using 100% of the CPU on purpose","Has been terminated by the task supervisor"],a:1},
-{m:2,q:"Windows 95 was the first Microsoft OS to support:",o:["Multithreading","The command prompt","File compression","A GUI"],a:0},
-{m:2,q:"Active Desktop, which let you view desktop items as a Web page, was introduced in:",o:["Windows 95","Windows 98","Windows Me","Windows XP"],a:1},
-{m:2,q:"Active Desktop was discontinued starting with which release?",o:["Windows 2000","Windows XP Professional, 64-bit Edition","Windows Vista","Windows 7"],a:1},
-{m:2,q:"Windows 98 added support for which newer hardware I/O standard?",o:["USB 1.0","USB 3.0","Thunderbolt","PCIe"],a:0},
-{m:2,q:"Windows Millennium Edition (Me) was primarily developed for:",o:["Server administrators","Home computer users","Enterprise domain controllers","Embedded/real-time systems"],a:1},
-{m:2,q:"Universal Plug and Play (UPnP), introduced in Windows Me, is a set of protocols that:",o:["Allows network devices to be automatically discovered and configured","Encrypts network traffic","Manages user authentication","Replaces TCP/IP"],a:0},
-{m:2,q:"Windows NT was first announced in 1991 after Microsoft and IBM ended their collaboration on:",o:["MS-DOS","OS/2","Windows 3.1","NetWare"],a:1},
-{m:2,q:"A key architectural difference between Windows 9x and Windows NT was that the NT kernel:",o:["Ran entirely in user mode","Ran in privileged mode with unrestricted hardware access","Had no kernel at all","Ran only on RISC processors"],a:1},
-{m:2,q:"The core Windows kernel file, used starting with Windows 2000 and still used today, is named:",o:["krnl386.exe","ntoskrnl.exe","winload.exe","hal.dll"],a:1},
-{m:2,q:"The Windows 9x/Windows ME kernel file was named:",o:["ntoskrnl.exe","krnl386.exe","bootmgr.exe","ntldr.exe"],a:1},
-{m:2,q:"Windows NT started life as which version number, with no earlier releases?",o:["1.0","2.0","3.1","4.0"],a:2},
-{m:2,q:"The first widely successful version of Windows NT, released around the same time as Windows 95, was:",o:["NT 3.1","NT 3.5","NT 4.0","NT 5.0"],a:2},
-{m:2,q:"Windows NT Server, unlike Windows NT Workstation, was designed as a:",o:["Single-user graphical OS","Multiuser server OS for Windows and other OS clients","Real-time embedded OS","Standalone kiosk OS"],a:1},
-{m:2,q:"Which protocol was used by Windows NT to communicate with IBM mainframes?",o:["AppleTalk","DLC","IPX/SPX","NetBEUI"],a:1},
-{m:2,q:"Of the protocols Windows NT supported (TCP/IP, NetBEUI, IPX/SPX, DLC, AppleTalk), which one remains commonly supported today?",o:["NetBEUI","DLC","TCP/IP","AppleTalk"],a:2},
-{m:2,q:"Windows NT 4.0 Server received what U.S. government security rating?",o:["A1","B2","C2","D1"],a:2},
-{m:2,q:"In the Windows NT security model, a domain is best defined as:",o:["A single computer running Active Directory","An administrative and security boundary common to all member computers","A DNS namespace only","A type of file system permission"],a:1},
-{m:2,q:"In a Windows NT domain, the server responsible for keeping the master copy of all usernames/passwords was the:",o:["BDC","PDC","DC","RODC"],a:1},
-{m:2,q:"The Windows NT domain feature that let a user sign on once and access any domain-member computer was called:",o:["Kerberos ticketing","Single sign-on","IntelliMirror","Replication"],a:1},
-{m:2,q:"NTFS, introduced in Windows NT, is best known for adding:",o:["File and folder permissions","Support for FAT16 only","Built-in disk defragmentation only","Automatic driver signing"],a:0},
-{m:2,q:"The Windows NT subsystem that let 16-bit apps run preemptively multitasked in a virtual DOS environment was called:",o:["WOW (Windows on Windows)","Hyper-V","Server Core","Active Directory"],a:0},
-{m:2,q:"Compared to Windows NT, the rewritten kernel in Windows 2000 ran approximately how much faster?",o:["10 percent","20 percent","30 percent","50 percent"],a:2},
-{m:2,q:"A VPN, a new networking technology supported starting with Windows 2000, provides:",o:["Faster clock speeds","Authentication and encryption over a non-secure network","Automatic hardware detection","A replacement for Active Directory"],a:1},
-{m:2,q:"Driver signing, introduced in Windows 2000, ensures that:",o:["Only certified driver versions can be installed and can't be overwritten by earlier versions","Drivers are automatically updated over the Internet","All drivers run in user mode only","Hardware vendors must pay a licensing fee"],a:0},
-{m:2,q:"Active Directory, first introduced in Windows 2000 Server, is best described as:",o:["A file compression utility","The core directory service providing single-point authentication and resource management for a domain","A replacement for NTFS","A type of RAID configuration"],a:1},
-{m:2,q:"In Active Directory, resources are organized hierarchically in folders called:",o:["Domains","Organizational units","Forests only","Replication groups"],a:1},
-{m:2,q:"Compared to the Windows NT PDC/BDC model, Windows 2000's Active Directory model allowed:",o:["Only one server to ever hold account data","Every domain controller to create and change Active Directory information","No synchronization between servers","Only read-only domain controllers"],a:1},
-{m:2,q:"The process by which Windows 2000 domain controllers synchronize Active Directory data with each other is called:",o:["Replication","Clustering","Polling","Hot swapping"],a:0},
-{m:2,q:"Kerberos, added in Windows 2000, is a security protocol that:",o:["Sends passwords in plaintext across the network for speed","Provides mutual authentication using encrypted tickets instead of transmitting passwords","Only works with NetBEUI","Replaces the need for a domain controller"],a:1},
-{m:2,q:"IntelliMirror, a Windows 2000 concept, enabled features such as:",o:["Roaming user profiles, folder redirection, and offline files","Server clustering","BitLocker drive encryption","Windows Sandbox"],a:0},
-{m:2,q:"Windows 2000 was offered in server editions including Server, Advanced Server, and:",o:["Enterprise Server","Datacenter Server","Foundation Server","Essentials Server"],a:1},
-{m:2,q:"Windows XP and Windows Server 2003 both evolved from and share core elements of which kernel?",o:["Windows NT 4.0","Windows 2000","Windows 98","Windows ME"],a:1},
-{m:2,q:"Windows XP was the first Windows OS to require:",o:["A product key at all","Activation, to help ensure software isn't pirated","An Internet connection to install","A 64-bit processor"],a:1},
-{m:2,q:"Windows XP Professional, like Windows 2000 Professional, could be used as a small server supporting up to how many users?",o:["5","10","25","50"],a:1},
-{m:2,q:"Which of the following was a new feature introduced with Windows Server 2003?",o:["Runtime code for the Windows .NET development environment","Hyper-V","Nano Server","Windows Admin Center"],a:0},
-{m:2,q:"Windows Server 2003 R2 introduced which valuable feature for managing files across an enterprise network?",o:["Distributed File System (DFS)","ReFS","Storage Spaces","Windows Containers"],a:0},
-{m:2,q:"Windows 7 is widely remembered for:",o:["Being the first Windows version to have a Start button","Simply \"working\" well, without users clamoring for the next release","Introducing Active Directory","Being the first 64-bit-only OS"],a:1},
-{m:2,q:"Which version of Windows, released between XP and 7, was poorly received due to reliability and driver problems?",o:["Windows ME","Windows Vista","Windows 8","Windows Server 2008"],a:1},
-{m:2,q:"Windows 7's new desktop presentation, offering consistent window design and 3D \"Glass\" effects, was called:",o:["Aero","Aqua","Fluent","Metro"],a:0},
-{m:2,q:"User Account Protection (UAP), which warns users before critical system changes are made, was first introduced in:",o:["Windows XP","Windows Vista","Windows 7","Windows 8"],a:1},
-{m:2,q:"Windows Service Hardening (WSH), introduced in Windows 7, is designed to:",o:["Restrict a compromised service from harming critical OS structures","Encrypt all network traffic by default","Replace the Windows firewall","Automatically patch third-party software"],a:0},
-{m:2,q:"Connection security rules, enforceable by group policy, ensure sessions are authenticated and encrypted using:",o:["Kerberos only","IP Security (IPsec)","SSL only","WEP"],a:1},
-{m:2,q:"Which of the following was NOT a new feature in Windows Server 2008?",o:["Read-only domain controller","Hyper-V","PowerShell","Windows Admin Center"],a:3},
-{m:2,q:"A read-only domain controller (RODC) is ideal for locations such as branch offices because:",o:["It can't authenticate users at all","Domain changes can't be initiated on it locally, limiting exposed sensitive data","It requires no network connection","It replaces the need for Active Directory entirely"],a:1},
-{m:2,q:"In a failover cluster, if the active server fails:",o:["All client data is lost","A standby server begins providing the network services","The cluster shuts down until manually restarted","Load is automatically distributed evenly, with no interruption possible"],a:1},
-{m:2,q:"A network load-balancing (NLB) cluster is best suited for:",o:["Database applications requiring exclusive data access","TCP/IP-based applications like Web servers and streaming media servers","File and print sharing","Email servers requiring exclusive access"],a:1},
-{m:2,q:"Hyper-V, rolled out in Windows Server 2008, is best described as:",o:["A hypervisor service allowing Windows Server to host multiple virtual machines","A file system for large storage arrays","A Linux distribution bundled with Windows","A cloud-only management console"],a:0},
-{m:2,q:"Self-healing NTFS, introduced in Windows Server 2008, improves availability because:",o:["The volume must be taken offline to run Chkdsk","The repair utility runs in the background so only problem files are unavailable","It eliminates the need for backups","It converts NTFS volumes to ReFS automatically"],a:1},
-{m:2,q:"Server Core is best described as:",o:["A bare-bones Windows Server install with a limited GUI, managed mostly via command line/PowerShell","A cloud-only edition of Windows Server","The GUI-heavy default install of Windows Server 2019","A Linux kernel bundled with Windows"],a:0},
-{m:2,q:"PowerShell commands, called cmdlets, follow what naming format?",o:["noun-verb","verb-noun","action.object","object::action"],a:1},
-{m:2,q:"Server Manager, as described in the module, combines and replaces which older Windows Server 2003 wizards?",o:["Manage Your Server, Configure Your Server, and Security Configuration wizards","Active Directory Installation Wizard only","Group Policy Editor only","Hyper-V Manager and Failover Cluster Manager"],a:0},
-{m:2,q:"Windows 8, released in October 2012, was primarily intended to:",o:["Remove all networking features","Unify the OS user interface/code base across touch devices and desktops","Replace NTFS with ReFS everywhere","Introduce Active Directory for the first time"],a:1},
-{m:2,q:"One of the most criticized changes in the original Windows 8 release was:",o:["The addition of Hyper-V","The removal of the Start button","The addition of PowerShell","The removal of NTFS support"],a:1},
-{m:2,q:"Storage Spaces, introduced in Windows 8, allows users/administrators to:",o:["Manage disks of different sizes/interfaces as a single pool of storage","Automatically defragment SSDs","Replace BitLocker encryption","Convert dynamic disks to basic disks"],a:0},
-{m:2,q:"Client Hyper-V, brought to Windows client OSs starting with Windows 8, allows you to:",o:["Run multiple OSs on a single physical computer, such as an older Windows version in a VM","Host a domain controller only on server editions","Replace the need for Windows Update","Run only Linux virtual machines"],a:0},
-{m:2,q:"Windows Server 2012's Standard and Datacenter editions primarily differ from each other based on:",o:["The number of users supported only","Their level of reliance on Hyper-V virtualization rights","Whether Active Directory can be installed","Whether NTFS is supported"],a:1},
-{m:2,q:"Windows Server 2012's Essentials edition is aimed at organizations with:",o:["25 or fewer users","100 or fewer users","1,000 or fewer users","Unlimited users"],a:0},
-{m:2,q:"Minimal Server Interface (MinShell), introduced with Windows Server 2012, is best described as:",o:["A happy medium between Server Core and the full GUI","A replacement for PowerShell","A cloud-only management tool","A Linux compatibility layer"],a:0},
-{m:2,q:"Resilient File System (ReFS), introduced in Windows Server 2012, does NOT support which of the following NTFS features?",o:["File-based compression, disk quotas, and Encrypting File System (EFS)","Backward compatibility with NTFS","Large-scale data storage","Reliability for demanding storage applications"],a:0},
-{m:2,q:"Dynamic Access Control (DAC) gives administrators fine-tuned control over shared resources based on:",o:["User attributes and file classification, alongside traditional permissions","IP address alone","Physical location of the server only","The time of day only"],a:0},
-{m:2,q:"Windows 10 was released in which month and year?",o:["January 2014","July 2015","October 2016","March 2018"],a:1},
-{m:2,q:"Microsoft skipped straight from Windows 8.1 to Windows 10, entirely bypassing:",o:["Windows 9","Windows 11","Windows NT 5","Windows Vista 2"],a:0},
-{m:2,q:"Windows 10 feature releases are numbered based on:",o:["Random sequential integers","The year and month of their announcement","Alphabetical order of feature names","The version of Internet Explorer bundled with them"],a:1},
-{m:2,q:"Virtual desktops in Windows 10 let users:",o:["Create multiple desktops and switch between sets of open application windows","Run multiple physical monitors from one graphics card","Access a remote desktop over RDP only","Run legacy 16-bit applications"],a:0},
-{m:2,q:"To use Cortana on a Windows 10 computer, a user must first:",o:["Disable Windows Defender","Be signed in with a Microsoft online account","Install PowerShell 4.0","Enable Server Core mode"],a:1},
-{m:2,q:"Windows Hello, a Windows 10 sign-in feature, allows you to sign in using:",o:["Only a traditional password","Facial recognition or a fingerprint, with compatible hardware","A physical smart card only","Voice recognition only"],a:1},
-{m:2,q:"Windows Sandbox, first available in Windows 10 v1903, is designed to:",o:["Provide a temporary, isolated desktop environment for running untrusted apps","Replace Hyper-V entirely","Permanently install experimental apps on the host OS","Encrypt the entire hard disk"],a:0},
-{m:2,q:"Windows Sandbox requires a minimum of how much RAM and how many processor cores on the host machine?",o:["2 GB RAM, 1 core","4 GB RAM, 2 cores","8 GB RAM, 4 cores","16 GB RAM, 8 cores"],a:1},
-{m:2,q:"Windows Server 2016 comes with the same user interface as:",o:["Windows 7","Windows 8.1","Windows 10","Windows XP"],a:2},
-{m:2,q:"Nano Server, introduced in Windows Server 2016, differs from Server Core in that Nano Server:",o:["Supports a full GUI","Has an even smaller footprint and doesn't support local logon at all","Only runs on ARM processors","Cannot be virtualized"],a:1},
-{m:2,q:"Starting with Windows Server version 1709, Nano Server can only be run:",o:["On bare-metal physical servers","In a Windows container","As a standalone desktop OS","On Linux hosts"],a:1},
-{m:2,q:"Hyper-V Containers, compared to Windows Server Containers, provide:",o:["A moderate level of isolation while sharing the host kernel","A virtual-machine level of isolation without the resource overhead of a full VM","No isolation at all","Isolation only for network traffic"],a:1},
-{m:2,q:"Windows Server 2019 places a strong emphasis on hybrid cloud datacenters, security, and:",o:["Single-tasking embedded systems","Hyper-converged infrastructures (HCI)","8-bit legacy application support","MS-DOS compatibility"],a:1},
-{m:2,q:"A hyper-converged infrastructure (HCI) extends virtualization beyond virtual machines to also include:",o:["Virtual storage networks and virtualized networking","Physical-only hardware management","Single-server, non-clustered deployments","Legacy BIOS firmware only"],a:0},
-{m:2,q:"Windows Admin Center (WAC), introduced in Windows Server 2019, is best described as:",o:["A browser-based console for managing servers, clusters, Windows 10 clients, and HCI","A replacement for Active Directory","A Linux-only management tool","A physical hardware appliance"],a:0},
-{m:2,q:"Windows Defender ATP's Exploit Guard feature is designed to:",o:["Lock down a server when attacks are detected and alert an administrator","Replace NTFS with ReFS automatically","Manage Hyper-V virtual switches","Provide facial recognition sign-in"],a:0},
-{m:2,q:"Of all the operating systems covered in the module, which is described as the oldest, most diverse, and most complex?",o:["Windows","macOS","UNIX","MS-DOS"],a:2},
-{m:2,q:"Versions of UNIX today generally adhere to one of two main design standards: SVR4 and:",o:["BSD (Berkeley Software Distribution)","NTFS","POSIX-Lite","GNU Classic"],a:0},
-{m:2,q:"Linux is considered \"UNIX-like\" because:",o:["It is a licensed copy of AT&T's original UNIX source code","It is based on standards developed after UNIX came out","It only runs on IBM mainframes","It has no relationship to UNIX at all"],a:1},
-{m:2,q:"Which of the following are the most popular Linux shells mentioned in the module?",o:["Bourne shell (sh), Bourne Again shell (bash), and C shell (csh)","PowerShell, Command Prompt, and WSL","Fish, Zsh, and Tcsh","DOS shell, OS/2 shell, and NT shell"],a:0},
-{m:2,q:"External commands in Linux are best described as:",o:["Commands built directly into the shell itself","Operating system or application programs stored as a separate executable file on disk","Commands that only work over a network","Commands reserved for the root user only"],a:1},
-{m:2,q:"X Window (X11), used by many Linux GUIs, is unique in that it is:",o:["Network enabled, allowing remote use via an X terminal","Only usable on a local machine","A replacement for the Linux kernel","Exclusive to Red Hat Linux"],a:0},
-{m:2,q:"GNOME and KDE are examples of:",o:["Linux kernels","Desktop managers that run on top of X Window","Linux bootloaders","Linux file systems"],a:1},
-{m:2,q:"All networking functions in Linux are based on which networking model?",o:["The NetBEUI model","The BSD networking model, supporting TCP/IP","The IPX/SPX model","The AppleTalk model"],a:1},
-{m:2,q:"macOS is built on which open-source, UNIX-like OS that Apple released in 2000?",o:["Darwin","FreeBSD","Solaris","HURD"],a:0},
-{m:2,q:"Before Mac OS 8.0, multitasking-like behavior was provided by a program called:",o:["MultiFinder","Rosetta","Dock","Spotlight"],a:0},
-{m:2,q:"AppleTalk, Mac's original peer-to-peer networking protocol, stopped being supported starting with:",o:["Mac OS 9.x","Mac OS X 10.5 Leopard","Mac OS X 10.6 Snow Leopard","macOS Mojave"],a:2},
-{m:2,q:"The macOS interface introduced with Mac OS X, forming the basis of all later releases, is called:",o:["Aero","Aqua","Fluent","Metro"],a:1},
-{m:2,q:"The macOS tool similar to the Windows Control Panel, used to configure time/date, display, and network settings, is called:",o:["System Preferences","Finder Preferences","Launchpad","Mission Control"],a:0},
-{m:2,q:"The macOS feature letting you start and switch between multiple running applications is called the:",o:["Taskbar","Dock","Ribbon","Sidebar"],a:1},
-{m:2,q:"Mac OS X 10.6 Snow Leopard was significant because it was the first version to:",o:["Support only Intel-based processors","Introduce Active Directory","Support AppleTalk","Run on ARM processors"],a:0},
-{m:2,q:"Which Mac OS X release introduced Launchpad and expanded multi-touch gestures, inspired by iOS?",o:["10.6 Snow Leopard","10.7 Lion","10.9 Mavericks","10.11 El Capitan"],a:1},
-{m:2,q:"Starting with which release did all macOS software updates move exclusively through the App Store?",o:["10.7 Lion","10.8 Mountain Lion","10.10 Yosemite","10.12 Sierra"],a:1},
-{m:2,q:"Mac OS X 10.9 Mavericks was notable for being the first release named after:",o:["A big cat","A California location","A Greek god","A programming language"],a:1},
-{m:2,q:"The Handoff feature, letting you continue work in progress between an iOS device and a Mac, debuted in:",o:["10.9 Mavericks","10.10 Yosemite","10.11 El Capitan","10.12 Sierra"],a:1},
-{m:2,q:"Split View, letting you work in two apps snapped to opposite sides of the screen, was introduced in:",o:["10.10 Yosemite","10.11 El Capitan","10.12 Sierra","10.14 Mojave"],a:1},
-{m:2,q:"Siri, the voice-activated assistant, was introduced to the Mac in which release?",o:["10.10 Yosemite","10.11 El Capitan","10.12 Sierra","10.13 High Sierra"],a:2},
-{m:2,q:"Dark Mode and Dynamic Desktop were new user interface features introduced in:",o:["macOS 10.12 Sierra","macOS 10.13 High Sierra","macOS 10.14 Mojave","macOS 10.15 Catalina"],a:2},
-{m:2,q:"Marzipan, introduced in macOS Mojave, is best described as:",o:["An iOS software layer allowing select iOS apps to run on the Mac","A new file system replacing HFS+","A cloud backup service","A new version of Safari"],a:0},
-{m:2,q:"Desktop Stacks, a macOS Mojave feature, is used to:",o:["Automatically group desktop icons/files by type, tags, or date","Encrypt files on the desktop","Create virtual desktops","Back up files to iCloud automatically"],a:0},
-
-// ---- MODULE 3 ----
-{m:3,q:"The number and type of CPUs, the buses between them, and other hardware like memory and storage together describe the computer's:",o:["File system","System architecture","Instruction set","Microarchitecture"],a:1},
-{m:3,q:"A path or channel between a CPU and the devices it manages (like memory or I/O) is called a:",o:["Register","Bus","Core","Thread"],a:1},
-{m:3,q:"A computer with just one physical CPU chip is called a:",o:["Multiprocessor computer","Multicore computer","Single-processor computer","Standalone computer"],a:2},
-{m:3,q:"The part of a CPU that actually reads and executes machine code is called a:",o:["Register","Processor core","Cache controller","Bus"],a:1},
-{m:3,q:"A quad-core processor contains how many processor cores?",o:["Two","Four","Eight","One"],a:1},
-{m:3,q:"The result of manufacturing a CPU on a silicon wafer is called a:",o:["Die","Chip socket","Wafer stack","Core bundle"],a:0},
-{m:3,q:"A computer with multiple separate physical CPU chips (sometimes 2 to 128+) is called a:",o:["Multiprocessor computer","Multicore computer","Single-processor computer","Embedded computer"],a:0},
-{m:3,q:"The memory address a CPU begins reading from whenever it receives a reset signal is called the:",o:["Program counter","Reset vector","Opcode address","Bootstrap pointer"],a:1},
-{m:3,q:"A CPU register that holds the address of the next instruction to be executed is the:",o:["Data register","Program counter","Address bus","Instruction cache"],a:1},
-{m:3,q:"The \"director of operations\" inside a CPU that coordinates the ALU, registers, and system bus is the:",o:["Arithmetic logic unit (ALU)","Control unit (CU)","Cache controller","Floating-point unit (FPU)"],a:1},
-{m:3,q:"The CPU component that performs arithmetic and logic instructions (add, AND, OR) is the:",o:["Control unit (CU)","Arithmetic logic unit (ALU)","Memory controller","Program counter"],a:1},
-{m:3,q:"Floating-point (decimal) math operations in a CPU are handled by the:",o:["ALU only","Floating-point unit (FPU)","Control bus","Cache controller"],a:1},
-{m:3,q:"A temporary holding location on a CPU where data must be placed before the CPU can use it is called a:",o:["Register","Bus lane","Cache line","Opcode slot"],a:0},
-{m:3,q:"The system bus is made up of which three types of buses?",o:["Control bus, address bus, data bus","Cache bus, memory bus, I/O bus","Input bus, output bus, control bus","Register bus, core bus, clock bus"],a:0},
-{m:3,q:"The bus that carries status signals, like interrupt signals, between the CPU and devices is the:",o:["Address bus","Data bus","Control bus","Cache bus"],a:2},
-{m:3,q:"The bus that carries the location in memory where data should be read from or written to is the:",o:["Control bus","Address bus","Data bus","System bus only"],a:1},
-{m:3,q:"The bus that carries the actual data being read from or written to memory is the:",o:["Address bus","Control bus","Data bus","IRQ bus"],a:2},
-{m:3,q:"CISC stands for:",o:["Complex Instruction Set Computing","Compact Instruction Scheduling Chip","Complex Interface System Control","Core Integrated Set Computing"],a:0},
-{m:3,q:"RISC stands for:",o:["Rapid Integrated System Chip","Reduced Instruction Set Computing","Registered Instruction Scheduling Core","Real-time Instruction Set Control"],a:1},
-{m:3,q:"Compared to RISC, CISC instructions generally:",o:["Do more work per instruction and may take several clock cycles","Always take exactly one clock cycle","Never use microcode","Have far more available registers"],a:0},
-{m:3,q:"Most RISC instructions execute in:",o:["Exactly four clock cycles","A uniform, typically one, clock cycle","A variable number of cycles depending on complexity","Zero clock cycles"],a:1},
-{m:3,q:"The list of machine code commands a CPU supports is called its:",o:["Instruction set","Opcode table","Microarchitecture","Register file"],a:0},
-{m:3,q:"The ability of a CPU to perform more than one task on a single clock cycle is called:",o:["Multithreading","Pipelining","Hyper-threading","Polling"],a:1},
-{m:3,q:"Pipelining tends to work more effectively on RISC CPUs mainly because:",o:["RISC has more registers and a uniform, single-cycle instruction timing","RISC CPUs run at lower clock speeds","RISC uses microcode for every instruction","RISC CPUs have no cache"],a:0},
-{m:3,q:"A small program inside a CISC chip that interprets and executes each complex instruction is called:",o:["Firmware","Microcode","An opcode","A compiler"],a:1},
-{m:3,q:"A program that translates high-level language code (like C++ or Java) into assembly code is a:",o:["Assembler","Compiler","Bootloader","Cache controller"],a:1},
-{m:3,q:"A program that turns assembly-language instructions into numeric opcodes is called a(n):",o:["Compiler","Assembler","Interpreter","Linker"],a:1},
-{m:3,q:"The numeric code read by the CPU representing a particular machine instruction is called a(n):",o:["Register","PID","Opcode","IRQ"],a:2},
-{m:3,q:"The speed at which a CPU executes instructions internally is called its:",o:["External clock speed","Internal clock speed","Bus speed only","Cache speed"],a:1},
-{m:3,q:"Compared to the internal clock speed, the external clock speed used to talk to the rest of the computer is usually:",o:["Exactly the same speed","Faster, to compensate for slower RAM","Lower — often 1/2, 1/3, 1/4, or 1/8 the internal speed","Irrelevant to CPU design"],a:2},
-{m:3,q:"Extremely fast memory built into the CPU chip that holds data likely to be needed next is called:",o:["Cache memory","Virtual memory","Non-volatile memory","Flash memory"],a:0},
-{m:3,q:"Which cache level is the fastest but smallest, typically only 8–128 KB per core?",o:["L1 cache","L2 cache","L3 cache","L4 cache"],a:0},
-{m:3,q:"Which cache level is typically shared among all CPU cores and can be 8 MB, 16 MB, or larger?",o:["L1 cache","L2 cache","L3 cache","None — caches are never shared"],a:2},
-{m:3,q:"If a cache level exists beyond what's built into the CPU chip, it is usually found:",o:["On the motherboard, as L4 cache","Inside the power supply","In the BIOS chip","On the hard disk"],a:0},
-{m:3,q:"Hardware that predicts what data will be needed next and preloads it into cache is called the:",o:["Cache controller","Control unit","Program counter","Bootstrap loader"],a:0},
-{m:3,q:"A 16-bit address bus can address how much memory?",o:["4 GB","16 TB","64 KB","1 MB"],a:2},
-{m:3,q:"A 32-bit address bus can address roughly how much memory?",o:["64 KB","4 GB","16 TB","1 TB"],a:1},
-{m:3,q:"Modern 64-bit processors, with a 64-bit address bus, can address up to:",o:["4 GB","64 KB","16 TB","640 KB"],a:2},
-{m:3,q:"CPU scheduling — deciding which process runs next — is actually a function of:",o:["The CPU hardware itself","The operating system","The BIOS/firmware","The cache controller"],a:1},
-{m:3,q:"The smallest block of computer code that can be independently scheduled for execution is called a:",o:["Process","Thread","Register","Opcode"],a:1},
-{m:3,q:"The ability to run two or more threads of a process at the same time is called:",o:["Multithreading","Polling","Clustering","Pipelining"],a:0},
-{m:3,q:"Intel's hyper-threading feature allows:",o:["Two threads to run on each CPU core simultaneously","A CPU to run at double its rated clock speed","Two separate physical CPUs to merge into one","CISC instructions to bypass microcode"],a:0},
-{m:3,q:"A quad-core CPU with hyper-threading enabled will typically be reported by the OS as having how many logical processors?",o:["4","8","2","16"],a:1},
-{m:3,q:"The notation \"x86\" indicates compatibility with which processor architecture?",o:["The ARM architecture","The Intel 8086","The Motorola 68000","The RISC-V architecture"],a:1},
-{m:3,q:"The Intel 8086, introduced in 1978, originally ran at approximately:",o:["16 MHz","1 GHz","3.4 GHz","500 MHz"],a:0},
-{m:3,q:"The original IBM PC used the 8088 processor instead of the 8086 mainly because the 8088:",o:["Had a wider 32-bit data bus","Had a lower cost, with an 8-bit data bus vs. the 8086's 16-bit bus","Supported hyper-threading","Was a RISC design"],a:1},
-{m:3,q:"Running a processor faster than its officially stated clock speed is called:",o:["Pipelining","Overclocking","Hyper-threading","Multithreading"],a:1},
-{m:3,q:"AMD processors are notable for being:",o:["Incompatible with Windows and Linux","Compatible with Intel x86-based software, often cheaper, and easier to overclock","Exclusively RISC-based like ARM","Only used in embedded microcontrollers"],a:1},
-{m:3,q:"ARM processors are best described as:",o:["CISC processors used mainly in desktop PCs","RISC processors widely used in mobile devices and embedded systems","Proprietary Intel server chips","Obsolete 1980s-era processors"],a:1},
-{m:3,q:"According to the module, which processor architecture is the most common in the world, largely due to mobile devices?",o:["Intel x86","AMD","ARM","PowerPC"],a:2},
-{m:3,q:"The description of a CPU's internal circuitry — chip technology, instruction set, and bit size — is called its:",o:["Microcode","Microarchitecture","System architecture","Opcode map"],a:1},
-{m:3,q:"Modern multicore CPU bus speeds are often measured in a unit abbreviated as:",o:["MHz only","GT/s (gigatransfers per second)","IOPS","FLOPS"],a:1},
-{m:3,q:"An Intel Core i7 processor die shown in the module contains how many cores in the example (i7 with a shared L3 cache)?",o:["Two","Four","Six","Twelve"],a:2},
-{m:3,q:"Most CPUs work internally with the same number of bits as their:",o:["Address bus width","Data bus width","Control bus width","Cache size"],a:1},
-{m:3,q:"Starting with Windows Server 2008 R2, all Windows server versions are:",o:["32-bit only","64-bit only","16-bit only","Architecture-independent"],a:1},
-{m:3,q:"According to the module's processor comparison table, the Intel Core i9 (introduced 2017) has how many cores?",o:["2–4","2–6","10–18","1 only"],a:2},
-{m:3,q:"Which Intel processor line is paired with AMD Ryzen 5 as a comparable chip?",o:["Core i3","Core i5","Core i7","Core i9"],a:1},
-{m:3,q:"Which Intel processor line has the widest bus speed range, from 2.5 GT/s up to 4.8 GT/s, per the module's table?",o:["Core i3","Core i5","Core i7","Core i9"],a:2},
-{m:3,q:"The Intel Core i7-5820 Haswell-E, a six-core CPU at 3.3 GHz, is based on which microarchitecture, released in 2013?",o:["Cascade Lake-AP","Haswell","Skylake","Sandy Bridge"],a:1},
-{m:3,q:"Cascade Lake-AP, the most current microarchitecture mentioned for Intel's Xeon server line, supports up to how many cores?",o:["18","32","56","128"],a:2},
-{m:3,q:"Which Linux command displays a quick summary of the CPU's architecture?",o:["lscpu","ps -aux","kill","chmod"],a:0},
-{m:3,q:"Detailed per-core processor information in Linux can be viewed by reading which file?",o:["/etc/cpuinfo","/proc/cpuinfo","/var/cpu.log","/sys/cpu.conf"],a:1},
-{m:3,q:"Which Linux terminal program gives a real-time, interactively updating view of CPU-hungry processes?",o:["top","cat","grep","ls"],a:0},
-{m:3,q:"Which Linux command shows a tree/hierarchy view of running processes?",o:["pstree","chmod","cpuid","df"],a:0},
-{m:3,q:"On macOS, which terminal command reports detailed hardware/system information, including the processor?",o:["system_profiler","lscpu","Get-ComputerInfo","uname -a"],a:0},
-{m:3,q:"Which Windows PowerShell command retrieves detailed processor properties like address/data bus width and architecture?",o:["Get-Process","Get-WmiObject win32_processor","Get-Service","Get-ComputerInfo -Basic"],a:1},
+const GROUPS = [
+{key:"m1-core",m:1,title:"OS Core Concepts"},
+{key:"m1-tasking",m:1,title:"Single- vs. Multitasking"},
+{key:"m1-users",m:1,title:"Single-user, Multiuser & Real-Time OSs"},
+{key:"m1-roles",m:1,title:"OS Roles: Client, Server & Standalone"},
+{key:"m1-fault",m:1,title:"Fault Tolerance & Scalability"},
+{key:"m1-boot",m:1,title:"Boot Process & Firmware"},
+{key:"m1-cpumode",m:1,title:"CPU Modes & Process Basics"},
+{key:"m1-startup",m:1,title:"Startup Sequence: Windows & Linux"},
+{key:"m1-io",m:1,title:"I/O Handling & Interrupts"},
+{key:"m1-security",m:1,title:"Security & Kernel Identity"},
+{key:"m1-history",m:1,title:"OS History & Flavors"},
+{key:"m1-interfaces",m:1,title:"Interfaces & Terminology"},
+{key:"m1-lifecycle",m:1,title:"Support Lifecycles"},
+{key:"m1-tools",m:1,title:"Windows Management Tools"},
+{key:"m2-dos",m:2,title:"Early MS-DOS Versions"},
+{key:"m2-earlygui",m:2,title:"Early Windows GUI"},
+{key:"m2-win95",m:2,title:"Windows 95 & 98 Era"},
+{key:"m2-nt",m:2,title:"Windows NT Fundamentals"},
+{key:"m2-2000",m:2,title:"Windows 2000 & Active Directory"},
+{key:"m2-xp",m:2,title:"Windows XP & Server 2003"},
+{key:"m2-vista7",m:2,title:"Windows Vista & 7"},
+{key:"m2-2008",m:2,title:"Windows Server 2008"},
+{key:"m2-2012",m:2,title:"Windows 8 & Server 2012"},
+{key:"m2-2016",m:2,title:"Windows 10 & Server 2016/2019"},
+{key:"m2-unix",m:2,title:"UNIX & Linux"},
+{key:"m2-macfound",m:2,title:"macOS Foundations"},
+{key:"m2-machistory",m:2,title:"macOS Version History"},
+{key:"m3-arch",m:3,title:"System Architecture Basics"},
+{key:"m3-internals",m:3,title:"CPU Internals & Registers"},
+{key:"m3-bus",m:3,title:"The System Bus (3 Types)"},
+{key:"m3-isa",m:3,title:"Instruction Set Architectures"},
+{key:"m3-cache",m:3,title:"Clock Speed & Cache"},
+{key:"m3-addr",m:3,title:"Address Bus Widths"},
+{key:"m3-sched",m:3,title:"Scheduling, Threads & x86"},
+{key:"m3-vendors",m:3,title:"Vendors & Architecture Terms"},
+{key:"m3-models",m:3,title:"CPU Model Families"},
+{key:"m3-cli",m:3,title:"Command-Line CPU Inspection"},
 ];
+</script>
+<script>
+
+const MODNAME = {1:"Module 1 &middot; OS Fundamentals", 2:"Module 2 &middot; Client/Server OSs", 3:"Module 3 &middot; The CPU"};
+const MODCLASS = {1:"", 2:"violet", 3:"teal"};
+const MODSHORT = {1:"OS", 2:"Client/Server", 3:"CPU"};
+
+function groupsFor(m){ return GROUPS.filter(g=>g.m===m); }
+function groupTitle(key){ const g = GROUPS.find(g=>g.key===key); return g?g.title:""; }
+function cardsForModule(m){ return m==="all" ? FLASHCARDS : FLASHCARDS.filter(c=>c.m===Number(m)); }
+function cardsForGroup(key){ return FLASHCARDS.filter(c=>c.g===key); }
+
+function shuffle(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]; }
+  return a;
+}
+function escapeHtml(str){
+  return String(str)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;");
+}
+// lenient term matching so typed recall isn't defeated by punctuation/aliasing
+function normTerm(s){
+  return String(s)
+    .toLowerCase()
+    .replace(/\([^)]*\)/g," ")           // drop parenthetical asides
+    .replace(/["“”]/g," ")
+    .replace(/[\/\-–—,.]/g," ")
+    .replace(/\b(a|an|the)\b/g," ")
+    .replace(/\s+/g," ")
+    .trim();
+}
+function isLikelyMatch(typed, term){
+  const a = normTerm(typed), b = normTerm(term);
+  if(!a) return false;
+  if(a===b) return true;
+  // accept if the typed text is a solid chunk of the term or vice versa
+  if(b.includes(a) && a.length >= Math.max(3, b.length*0.5)) return true;
+  if(a.includes(b) && b.length >= 3) return true;
+  return false;
+}
 
 /* =========================================================
    STATE
    ========================================================= */
-let view = "home";           // home | flash | quiz | results
-let fsFilter = "all";        // all | 1 | 3
+let view = "home";           // home | flash | quizsetup | quiz | results
+
+// flashcards
+let fsScope = {type:"all"};  // {type:"all"} | {type:"module", m:1} | {type:"group", key:"m1-core"}
+let fsMode = "flip";         // flip | list
 let fsDeck = [];
 let fsIndex = 0;
 let fsFlipped = false;
 
-let qzFilter = "all";
+// quiz
+let qzScope = {type:"all"};
+let qzType = "id";           // id (typed recall) | match (multiple choice)
+let qzDir = "d2t";           // d2t: show definition, recall term | t2d: show term, recall definition
 let qzDeck = [];
 let qzIndex = 0;
 let qzScore = 0;
 let qzAnswered = false;
 let qzWrongList = [];
+let qzOverridden = false;
 
-function shuffle(arr){
-  const a = arr.slice();
-  for(let i=a.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [a[i],a[j]] = [a[j],a[i]];
-  }
-  return a;
+function scopeLabel(scope){
+  if(scope.type==="all") return "All modules";
+  if(scope.type==="module") return MODNAME[scope.m].replace(/&middot;/,"·").split("·")[1].trim();
+  if(scope.type==="group") return groupTitle(scope.key);
 }
-
-function filterByMod(list, f){
-  if(f==="all") return list.slice();
-  return list.filter(x=>String(x.m)===String(f));
+function scopeCards(scope){
+  if(scope.type==="all") return FLASHCARDS;
+  if(scope.type==="module") return cardsForModule(scope.m);
+  if(scope.type==="group") return cardsForGroup(scope.key);
 }
 
 /* =========================================================
-   RENDER: HOME
+   HOME
    ========================================================= */
 function renderHome(){
   const el = document.getElementById("app");
-  const m1f = FLASHCARDS.filter(c=>c.m===1).length;
-  const m2f = FLASHCARDS.filter(c=>c.m===2).length;
-  const m3f = FLASHCARDS.filter(c=>c.m===3).length;
-  const m1q = QUIZ.filter(c=>c.m===1).length;
-  const m2q = QUIZ.filter(c=>c.m===2).length;
-  const m3q = QUIZ.filter(c=>c.m===3).length;
-
+  const totalTerms = FLASHCARDS.length;
+  const totalGroups = GROUPS.length;
   el.innerHTML = `
     <div class="brand" id="brandHome">
-      <div class="chip mono">01</div>
-      <div class="name">Study Deck &middot; <b>OS Fundamentals</b>, <b>Client/Server OSs</b> &amp; <b>The CPU</b></div>
+      <div class="chip mono">OS</div>
+      <div class="name">Study Deck &middot; <b>Systems &amp; CPU</b></div>
     </div>
 
     <div class="hero">
-      <h1>Everything from Module&nbsp;1, Module&nbsp;2 &amp; Module&nbsp;3, ready to drill.</h1>
-      <p class="lead">${FLASHCARDS.length} flashcards and ${QUIZ.length} identification-style quiz questions built straight from your three module PDFs &mdash; definitions, processes, Windows/UNIX/macOS history, buses, cache levels, all of it. Tap an answer and you'll know instantly if you got it right.</p>
-
-      <div class="statrow">
-        <div class="stat"><div class="n mono">${FLASHCARDS.length}</div><div class="l">flashcards total</div></div>
-        <div class="stat"><div class="n mono">${QUIZ.length}</div><div class="l">quiz questions total</div></div>
-        <div class="stat"><div class="n mono">${m1f+m1q}</div><div class="l">Module 1 items (OS Fundamentals)</div></div>
-        <div class="stat"><div class="n mono">${m2f+m2q}</div><div class="l">Module 2 items (Client/Server OSs)</div></div>
-        <div class="stat"><div class="n mono">${m3f+m3q}</div><div class="l">Module 3 items (The CPU)</div></div>
-      </div>
-
-      <div class="modecards">
-        <button class="modecard" id="goFlash">
-          <span class="led"></span>
-          <span class="tag mono">MODE 01</span>
-          <h3>Flashcards</h3>
-          <p>Flip through every term and definition at your own pace. Great for first-pass learning before you quiz yourself.</p>
-        </button>
-        <button class="modecard teal" id="goQuiz">
-          <span class="led"></span>
-          <span class="tag mono">MODE 02</span>
-          <h3>Quiz</h3>
-          <p>Multiple-choice, identification-style questions. Pick an answer &mdash; it turns green or red immediately, with the right answer shown if you miss it.</p>
-        </button>
-      </div>
-
-      <div class="coverage">
-        <h4>What's covered</h4>
-        <ul>
-          <li>OS definitions, roles &amp; categories</li>
-          <li>Single/multi-tasking, single/multiuser, RTOS</li>
-          <li>Boot procedure, BIOS/UEFI, POST, CMOS</li>
-          <li>Kernel vs. user mode, processes, PIDs</li>
-          <li>Interrupts, ISRs, traps, NMIs, polling</li>
-          <li>OS history, key dates &amp; key people</li>
-          <li>MS-DOS &amp; early Windows (3.1, 95, 98, Me)</li>
-          <li>Windows NT, 2000, XP, Server 2003</li>
-          <li>Windows 7/8/10 &amp; Server 2008&ndash;2019</li>
-          <li>Active Directory, domains &amp; Kerberos</li>
-          <li>Hyper-V, containers, clustering, HCI</li>
-          <li>UNIX/Linux shells, X Window, GNOME/KDE</li>
-          <li>macOS/Darwin history &amp; key releases</li>
-          <li>CPU architecture: CU, ALU, registers, buses</li>
-          <li>CISC vs. RISC, pipelining, microcode</li>
-          <li>Clock speed, cache levels L1&ndash;L4</li>
-          <li>Threads, multithreading, hyper-threading</li>
-          <li>Intel, AMD &amp; ARM processors</li>
-          <li>Address/data/control bus math</li>
-        </ul>
-      </div>
+      <h1>Know the terms cold, not the multiple-choice trick.</h1>
+      <p class="lead">Flashcards and quizzes built from ${totalTerms} terms across three modules, organized into ${totalGroups} small groups so nothing gets skipped when you're short on time.</p>
     </div>
 
-    <footer class="note">Source: Module 1 &mdash; Operating Systems Fundamentals &middot; Module 2 &mdash; Modern Client and Server Operating Systems &middot; Module 3 &mdash; The Central Processing Unit (CPU). Built for review only.</footer>
+    <div class="statrow">
+      <div class="stat"><div class="n mono">${totalTerms}</div><div class="l">terms &amp; definitions</div></div>
+      <div class="stat"><div class="n mono">${totalGroups}</div><div class="l">study groups</div></div>
+      <div class="stat"><div class="n mono">3</div><div class="l">modules</div></div>
+    </div>
+
+    <div class="modecards">
+      <button class="modecard" id="goFlash">
+        <span class="led"></span>
+        <span class="tag mono">STUDY</span>
+        <h3>Flashcards</h3>
+        <p>Grouped by topic. Flip through one at a time, or open list view to see every term in a group at once.</p>
+      </button>
+      <button class="modecard teal" id="goQuiz">
+        <span class="led"></span>
+        <span class="tag mono">TEST YOURSELF</span>
+        <h3>Identification quiz</h3>
+        <p>Read the definition, recall the term yourself &mdash; or switch to multiple choice. No guessing between explanations.</p>
+      </button>
+    </div>
+
+    <div class="coverage">
+      <h4>What's covered</h4>
+      <ul>
+        <li>Module 1 &mdash; OS fundamentals, boot process, processes &amp; interrupts (${cardsForModule(1).length} terms)</li>
+        <li>Module 2 &mdash; Windows, UNIX/Linux &amp; macOS history (${cardsForModule(2).length} terms)</li>
+        <li>Module 3 &mdash; CPU architecture, cache &amp; scheduling (${cardsForModule(3).length} terms)</li>
+      </ul>
+    </div>
+
+    <footer class="note">Tip: pick a specific group (e.g. &ldquo;The System Bus &mdash; 3 Types&rdquo;) when you only have a few minutes, so you review the whole set instead of a random slice of it.</footer>
   `;
-  document.getElementById("goFlash").onclick = ()=>{ startFlash("all"); };
-  document.getElementById("goQuiz").onclick = ()=>{ startQuiz("all"); };
-  document.getElementById("brandHome").onclick = ()=>{};
+  document.getElementById("brandHome").onclick = ()=>{ view="home"; renderHome(); };
+  document.getElementById("goFlash").onclick = ()=>{ view="flashscope"; renderFlashScope(); };
+  document.getElementById("goQuiz").onclick = ()=>{ view="quizsetup"; renderQuizSetup(); };
 }
 
 /* =========================================================
-   FLASHCARDS
+   SCOPE PICKERS (shared shape for flashcards + quiz setup)
    ========================================================= */
-function startFlash(filter){
-  fsFilter = filter;
-  fsDeck = shuffle(filterByMod(FLASHCARDS, filter));
+function renderScopePicker(container, currentScope, onPick, idPrefix){
+  let html = `<div class="filterrow" id="${idPrefix}ModRow">
+      <button class="fbtn ${currentScope.type==='all'?'active':''}" data-m="all">All modules (${FLASHCARDS.length})</button>
+      <button class="fbtn ${currentScope.type==='module'&&currentScope.m===1?'active':''}" data-m="1">Module 1 (${cardsForModule(1).length})</button>
+      <button class="fbtn violet ${currentScope.type==='module'&&currentScope.m===2?'active':''}" data-m="2">Module 2 (${cardsForModule(2).length})</button>
+      <button class="fbtn teal ${currentScope.type==='module'&&currentScope.m===3?'active':''}" data-m="3">Module 3 (${cardsForModule(3).length})</button>
+    </div>`;
+
+  const activeModule = currentScope.type==="module" ? currentScope.m : (currentScope.type==="group" ? FLASHCARDS.find(c=>c.g===currentScope.key).m : null);
+
+  if(activeModule){
+    const cls = MODCLASS[activeModule];
+    html += `<div class="groupgrid" id="${idPrefix}GroupRow">`;
+    groupsFor(activeModule).forEach(g=>{
+      const active = currentScope.type==="group" && currentScope.key===g.key;
+      html += `<button class="groupchip ${cls} ${active?'active':''}" data-g="${g.key}">
+        <span class="gt">${escapeHtml(g.title)}</span>
+        <span class="gc mono">${cardsForGroup(g.key).length}</span>
+      </button>`;
+    });
+    html += `</div>`;
+  }
+
+  container.innerHTML = html;
+  container.querySelectorAll(`#${idPrefix}ModRow .fbtn`).forEach(b=>{
+    b.onclick = ()=>{
+      const m = b.dataset.m;
+      onPick(m==="all" ? {type:"all"} : {type:"module", m:Number(m)});
+    };
+  });
+  const gr = container.querySelector(`#${idPrefix}GroupRow`);
+  if(gr){
+    gr.querySelectorAll(".groupchip").forEach(b=>{
+      b.onclick = ()=>{
+        const key = b.dataset.g;
+        // toggle: clicking the active group returns to whole-module scope
+        if(currentScope.type==="group" && currentScope.key===key){
+          onPick({type:"module", m:activeModule});
+        } else {
+          onPick({type:"group", key});
+        }
+      };
+    });
+  }
+}
+
+/* =========================================================
+   FLASHCARD SCOPE SCREEN
+   ========================================================= */
+function renderFlashScope(){
+  const el = document.getElementById("app");
+  el.innerHTML = `
+    <div class="viewhead">
+      <button class="back" id="backHome">&larr; Home</button>
+    </div>
+    <div class="hero" style="margin-bottom:8px;">
+      <h1 style="font-size:26px; max-width:none;">Choose what to study</h1>
+      <p class="lead" style="margin-bottom:20px;">Pick a module, then narrow to one group if you want to see a whole topic at once.</p>
+    </div>
+    <div id="scopePicker"></div>
+    <button class="startbtn" id="startFlashBtn">Start studying &rarr;</button>
+  `;
+  document.getElementById("backHome").onclick = ()=>{ view="home"; renderHome(); };
+  const picker = document.getElementById("scopePicker");
+  renderScopePicker(picker, fsScope, (scope)=>{ fsScope = scope; renderFlashScope(); }, "fs");
+  document.getElementById("startFlashBtn").onclick = ()=>{ startFlash(fsScope); };
+}
+
+/* =========================================================
+   FLASHCARDS (study)
+   ========================================================= */
+function startFlash(scope){
+  fsScope = scope;
+  fsDeck = scopeCards(scope);
   fsIndex = 0;
   fsFlipped = false;
   view = "flash";
@@ -906,39 +921,36 @@ function startFlash(filter){
 
 function renderFlash(){
   const el = document.getElementById("app");
-  const card = fsDeck[fsIndex];
-  const modLabel = card.m===1 ? "MODULE 1 &middot; OS FUNDAMENTALS" : (card.m===2 ? "MODULE 2 &middot; CLIENT/SERVER OSs" : "MODULE 3 &middot; THE CPU");
-  const modClass = card.m===1 ? "" : (card.m===2 ? "violet" : "teal");
+  if(fsMode === "list"){ renderFlashList(el); return; }
+
+  const item = fsDeck[fsIndex];
+  const cls = MODCLASS[item.m];
 
   el.innerHTML = `
     <div class="viewhead">
-      <button class="back" id="backHome">&larr; Home</button>
-      <div class="scorepill mono">Flashcards</div>
-    </div>
-
-    <div class="filterrow">
-      <button class="fbtn ${fsFilter==='all'?'active':''}" data-f="all">All (${FLASHCARDS.length})</button>
-      <button class="fbtn ${fsFilter==='1'?'active':''}" data-f="1">Module 1 &middot; OS (${FLASHCARDS.filter(c=>c.m===1).length})</button>
-      <button class="fbtn violet ${fsFilter==='2'?'active':''}" data-f="2">Module 2 &middot; Client/Server (${FLASHCARDS.filter(c=>c.m===2).length})</button>
-      <button class="fbtn teal ${fsFilter==='3'?'active':''}" data-f="3">Module 3 &middot; CPU (${FLASHCARDS.filter(c=>c.m===3).length})</button>
+      <button class="back" id="backScope">&larr; ${escapeHtml(scopeLabel(fsScope))}</button>
+      <div class="segwrap">
+        <button class="seg active" id="modeFlip">Flip</button>
+        <button class="seg" id="modeList">List</button>
+      </div>
     </div>
 
     <div class="progwrap">
-      <div class="progtext"><span>Card <b>${fsIndex+1}</b> of ${fsDeck.length}</span><span>Tap card to flip</span></div>
+      <div class="progtext"><span>Card <b>${fsIndex+1}</b> of ${fsDeck.length}</span><span>${escapeHtml(groupTitle(item.g))}</span></div>
       <div class="progbar"><div class="progfill" style="width:${((fsIndex+1)/fsDeck.length)*100}%"></div></div>
     </div>
 
     <div class="cardstage">
       <div class="flashcard ${fsFlipped?'flipped':''}" id="flashcardEl">
-        <div class="face front">
-          <div class="modlabel ${modClass}">${modLabel}</div>
-          <div class="termtext">${escapeHtml(card.t)}</div>
-          <div class="hint">tap to reveal definition</div>
+        <div class="face front ${cls}">
+          <div class="modlabel mono">${MODNAME[item.m]} &middot; ${escapeHtml(groupTitle(item.g))}</div>
+          <div class="termtext">${escapeHtml(item.t)}</div>
+          <div class="hint mono">tap to flip</div>
         </div>
-        <div class="face back ${modClass}">
-          <div class="modlabel ${modClass}">DEFINITION</div>
-          <div class="deftext">${escapeHtml(card.d)}</div>
-          <div class="hint">tap to flip back</div>
+        <div class="face back ${cls}">
+          <div class="modlabel mono">DEFINITION</div>
+          <div class="deftext">${escapeHtml(item.d)}</div>
+          <div class="hint mono">tap to flip</div>
         </div>
       </div>
     </div>
@@ -946,13 +958,15 @@ function renderFlash(){
     <div class="cardnav">
       <div class="navbtns">
         <button class="navbtn" id="prevBtn" ${fsIndex===0?'disabled':''}>&larr; Prev</button>
-        <button class="navbtn primary" id="nextBtn">${fsIndex===fsDeck.length-1?'Restart deck':'Next &rarr;'}</button>
+        <button class="navbtn primary" id="nextBtn">${fsIndex===fsDeck.length-1?'Restart':'Next'} &rarr;</button>
       </div>
       <button class="iconbtn" id="shuffleBtn" title="Shuffle">&#8635;</button>
     </div>
   `;
 
-  document.getElementById("backHome").onclick = ()=>{ view="home"; renderHome(); };
+  document.getElementById("backScope").onclick = ()=>{ view="flashscope"; renderFlashScope(); };
+  document.getElementById("modeFlip").onclick = ()=>{ fsMode="flip"; renderFlash(); };
+  document.getElementById("modeList").onclick = ()=>{ fsMode="list"; renderFlash(); };
   document.getElementById("flashcardEl").onclick = ()=>{ fsFlipped=!fsFlipped; document.getElementById("flashcardEl").classList.toggle("flipped"); };
   document.getElementById("prevBtn").onclick = ()=>{ if(fsIndex>0){ fsIndex--; fsFlipped=false; renderFlash(); } };
   document.getElementById("nextBtn").onclick = ()=>{
@@ -960,17 +974,109 @@ function renderFlash(){
     fsFlipped=false; renderFlash();
   };
   document.getElementById("shuffleBtn").onclick = ()=>{ fsDeck = shuffle(fsDeck); fsIndex=0; fsFlipped=false; renderFlash(); };
-  el.querySelectorAll(".filterrow .fbtn").forEach(b=>{
-    b.onclick = ()=>{ startFlash(b.dataset.f); };
+}
+
+// list view: every card in scope, grouped by section, so a whole set is visible at once
+function renderFlashList(el){
+  const groupKeys = [...new Set(fsDeck.map(c=>c.g))];
+  let body = "";
+  groupKeys.forEach(gkey=>{
+    const cards = fsDeck.filter(c=>c.g===gkey);
+    const m = cards[0].m;
+    body += `<div class="sectionlabel">${MODNAME[m]} &middot; ${escapeHtml(groupTitle(gkey))} &middot; ${cards.length} terms</div>`;
+    cards.forEach((c,i)=>{
+      const id = `${gkey}__${i}`;
+      body += `
+        <div class="listcard" data-id="${id}">
+          <button class="listhead">
+            <span class="lt">${escapeHtml(c.t)}</span>
+            <span class="lx mono">+</span>
+          </button>
+          <div class="listbody">${escapeHtml(c.d)}</div>
+        </div>`;
+    });
   });
+
+  el.innerHTML = `
+    <div class="viewhead">
+      <button class="back" id="backScope">&larr; ${escapeHtml(scopeLabel(fsScope))}</button>
+      <div class="segwrap">
+        <button class="seg" id="modeFlip">Flip</button>
+        <button class="seg active" id="modeList">List</button>
+      </div>
+    </div>
+    <div class="listtoolbar">
+      <div class="progtext mono" style="margin:0;">${fsDeck.length} terms in view</div>
+      <button class="navbtn" id="expandAllBtn">Expand all</button>
+    </div>
+    ${body}
+  `;
+
+  document.getElementById("backScope").onclick = ()=>{ view="flashscope"; renderFlashScope(); };
+  document.getElementById("modeFlip").onclick = ()=>{ fsMode="flip"; fsIndex=0; fsFlipped=false; renderFlash(); };
+  document.getElementById("modeList").onclick = ()=>{ renderFlash(); };
+  el.querySelectorAll(".listcard").forEach(card=>{
+    card.querySelector(".listhead").onclick = ()=>{ card.classList.toggle("open"); };
+  });
+  let expanded = false;
+  document.getElementById("expandAllBtn").onclick = ()=>{
+    expanded = !expanded;
+    el.querySelectorAll(".listcard").forEach(c=>c.classList.toggle("open", expanded));
+    document.getElementById("expandAllBtn").textContent = expanded ? "Collapse all" : "Expand all";
+  };
+}
+
+/* =========================================================
+   QUIZ SETUP
+   ========================================================= */
+function renderQuizSetup(){
+  const el = document.getElementById("app");
+  el.innerHTML = `
+    <div class="viewhead">
+      <button class="back" id="backHome">&larr; Home</button>
+    </div>
+    <div class="hero" style="margin-bottom:8px;">
+      <h1 style="font-size:26px; max-width:none;">Set up your quiz</h1>
+      <p class="lead" style="margin-bottom:20px;">Choose a scope, a quiz type, and a direction. The quiz always covers the whole set you pick &mdash; nothing gets left out.</p>
+    </div>
+
+    <div class="segrow">
+      <div class="seglabel">Quiz type</div>
+      <div class="segwrap">
+        <button class="seg ${qzType==='id'?'active':''}" id="typeId">Identification &mdash; type the term</button>
+        <button class="seg ${qzType==='match'?'active':''}" id="typeMatch">Multiple choice</button>
+      </div>
+    </div>
+
+    <div class="segrow">
+      <div class="seglabel">Direction</div>
+      <div class="segwrap">
+        <button class="seg ${qzDir==='d2t'?'active':''}" id="dirD2T">Definition &rarr; Term</button>
+        <button class="seg ${qzDir==='t2d'?'active':''}" id="dirT2D">Term &rarr; Definition</button>
+      </div>
+    </div>
+
+    <div class="sectionlabel" style="margin-top:6px;">Scope</div>
+    <div id="scopePicker"></div>
+    <button class="startbtn" id="startQuizBtn">Start quiz &rarr;</button>
+  `;
+  document.getElementById("backHome").onclick = ()=>{ view="home"; renderHome(); };
+  document.getElementById("typeId").onclick = ()=>{ qzType="id"; renderQuizSetup(); };
+  document.getElementById("typeMatch").onclick = ()=>{ qzType="match"; renderQuizSetup(); };
+  document.getElementById("dirD2T").onclick = ()=>{ qzDir="d2t"; renderQuizSetup(); };
+  document.getElementById("dirT2D").onclick = ()=>{ qzDir="t2d"; renderQuizSetup(); };
+
+  const picker = document.getElementById("scopePicker");
+  renderScopePicker(picker, qzScope, (scope)=>{ qzScope = scope; renderQuizSetup(); }, "qz");
+  document.getElementById("startQuizBtn").onclick = ()=>{ startQuiz(qzScope); };
 }
 
 /* =========================================================
    QUIZ
    ========================================================= */
-function startQuiz(filter){
-  qzFilter = filter;
-  qzDeck = shuffle(filterByMod(QUIZ, filter));
+function startQuiz(scope){
+  qzScope = scope;
+  qzDeck = shuffle(scopeCards(scope));
   qzIndex = 0;
   qzScore = 0;
   qzAnswered = false;
@@ -979,36 +1085,138 @@ function startQuiz(filter){
   renderQuiz();
 }
 
-function renderQuiz(){
-  const el = document.getElementById("app");
-  const item = qzDeck[qzIndex];
-  const modLabel = item.m===1 ? "MODULE 1 &middot; OS FUNDAMENTALS" : (item.m===2 ? "MODULE 2 &middot; CLIENT/SERVER OSs" : "MODULE 3 &middot; THE CPU");
-  const modClass = item.m===1 ? "" : (item.m===2 ? "violet" : "teal");
-  const letters = ["A","B","C","D"];
+function quizPrompt(item){
+  return qzDir==="d2t" ? item.d : item.t;
+}
+function quizAnswer(item){
+  return qzDir==="d2t" ? item.t : item.d;
+}
 
-  el.innerHTML = `
+function renderQuiz(){
+  if(qzType==="id") renderQuizId();
+  else renderQuizMatch();
+}
+
+function quizHeadHtml(item){
+  return `
     <div class="viewhead">
       <button class="back" id="backHome">&larr; Home</button>
       <div class="scorepill mono">Score <b>${qzScore}</b> / ${qzIndex + (qzAnswered?1:0)}</div>
     </div>
-
-    <div class="filterrow" id="filterRow">
-      <button class="fbtn ${qzFilter==='all'?'active':''}" data-f="all">All (${QUIZ.length})</button>
-      <button class="fbtn ${qzFilter==='1'?'active':''}" data-f="1">Module 1 &middot; OS (${QUIZ.filter(c=>c.m===1).length})</button>
-      <button class="fbtn violet ${qzFilter==='2'?'active':''}" data-f="2">Module 2 &middot; Client/Server (${QUIZ.filter(c=>c.m===2).length})</button>
-      <button class="fbtn teal ${qzFilter==='3'?'active':''}" data-f="3">Module 3 &middot; CPU (${QUIZ.filter(c=>c.m===3).length})</button>
-    </div>
-
     <div class="progwrap">
-      <div class="progtext"><span>Question <b>${qzIndex+1}</b> of ${qzDeck.length}</span><span>${Math.round(((qzIndex)/qzDeck.length)*100)}% through</span></div>
+      <div class="progtext"><span>Question <b>${qzIndex+1}</b> of ${qzDeck.length}</span><span>${escapeHtml(scopeLabel(qzScope))} &middot; ${escapeHtml(groupTitle(item.g))}</span></div>
       <div class="progbar"><div class="progfill" style="width:${(qzIndex/qzDeck.length)*100}%"></div></div>
     </div>
+  `;
+}
 
+/* ---- Identification: type the term/definition, self-checked with lenient match ---- */
+function renderQuizId(){
+  const el = document.getElementById("app");
+  const item = qzDeck[qzIndex];
+  const modClass = MODCLASS[item.m];
+  const askingForTerm = qzDir==="d2t";
+
+  el.innerHTML = `
+    ${quizHeadHtml(item)}
     <div class="qcard">
-      <div class="qmod ${modClass}">${modLabel}</div>
-      <div class="qtext">${escapeHtml(item.q)}</div>
+      <div class="qmod ${modClass} mono">${MODNAME[item.m]} &middot; ${askingForTerm?'IDENTIFY THE TERM':'IDENTIFY THE DEFINITION'}</div>
+      <div class="qtext">${escapeHtml(quizPrompt(item))}</div>
+      <div class="idform" id="idForm">
+        <input class="idinput" id="idInput" type="text" autocomplete="off" autocapitalize="off" spellcheck="false"
+          placeholder="${askingForTerm?'Type the term…':'Type a short definition…'}">
+        <button class="idsubmit" id="idSubmit">Check</button>
+      </div>
+      <div class="idresult" id="idResult"></div>
+    </div>
+    <div class="quizfoot">
+      <button class="navbtn primary hidden" id="nextQBtn">${qzIndex===qzDeck.length-1 ? 'See results' : 'Next question'} &rarr;</button>
+    </div>
+  `;
+
+  document.getElementById("backHome").onclick = ()=>{ view="home"; renderHome(); };
+  const input = document.getElementById("idInput");
+  input.focus();
+  qzOverridden = false;
+
+  function submit(){
+    if(qzAnswered) return;
+    qzAnswered = true;
+    const typed = input.value.trim();
+    const correctAnswer = quizAnswer(item);
+    // grading: strict-ish for term recall, informational only for definition recall
+    let isRight;
+    if(askingForTerm){
+      isRight = isLikelyMatch(typed, item.t);
+    } else {
+      // definitions vary too much to auto-grade reliably; default to self-review
+      isRight = typed.length > 0 && isLikelyMatch(typed.slice(0,40), item.d.slice(0,40));
+    }
+    if(isRight) qzScore++;
+    else qzWrongList.push(item);
+
+    input.disabled = true;
+    document.getElementById("idSubmit").disabled = true;
+
+    const box = document.getElementById("idResult");
+    box.classList.add("show", isRight?"good":"bad");
+    box.innerHTML = `
+      <div class="idrow"><span class="k">Your answer</span><span class="v ${isRight?'':'your-term'}">${escapeHtml(typed || "(blank)")}</span></div>
+      <div class="idrow"><span class="k">Correct</span><span class="v ${isRight?'':'correct-term'}">${escapeHtml(correctAnswer)}</span></div>
+      ${askingForTerm ? '' : '<div class="idrow" style="opacity:.75;"><span class="k">Note</span><span class="v" style="font-weight:400;">Definitions are self-checked &mdash; use your judgment.</span></div>'}
+    `;
+    if(!isRight){
+      const ov = document.createElement("button");
+      ov.className = "overridebtn";
+      ov.id = "overrideBtn";
+      ov.textContent = "Actually, mark this correct";
+      ov.onclick = ()=>{
+        if(qzOverridden) return;
+        qzOverridden = true;
+        qzScore++;
+        qzWrongList = qzWrongList.filter(w=>w!==item);
+        box.classList.remove("bad"); box.classList.add("good");
+        ov.classList.add("flipped");
+        ov.textContent = "Marked correct";
+        document.querySelector(".scorepill").innerHTML = "Score <b>"+qzScore+"</b> / "+(qzIndex+1);
+      };
+      box.appendChild(ov);
+    }
+
+    document.getElementById("nextQBtn").classList.remove("hidden");
+    document.querySelector(".scorepill").innerHTML = "Score <b>"+qzScore+"</b> / "+(qzIndex+1);
+  }
+
+  document.getElementById("idSubmit").onclick = submit;
+  input.addEventListener("keydown", (e)=>{ if(e.key==="Enter") submit(); });
+
+  document.getElementById("nextQBtn").onclick = advanceQuiz;
+}
+
+/* ---- Multiple choice: definition <-> term, distractors pulled from same scope ---- */
+function renderQuizMatch(){
+  const el = document.getElementById("app");
+  const item = qzDeck[qzIndex];
+  const modClass = MODCLASS[item.m];
+  const askingForTerm = qzDir==="d2t";
+  const letters = ["A","B","C","D"];
+
+  // build 4 options: correct + 3 distractors, preferring same group, then same module, then anywhere
+  const correctVal = askingForTerm ? item.t : item.d;
+  let pool = cardsForGroup(item.g).filter(c=>c!==item);
+  if(pool.length < 3) pool = pool.concat(cardsForModule(item.m).filter(c=>c!==item && !pool.includes(c)));
+  if(pool.length < 3) pool = pool.concat(FLASHCARDS.filter(c=>c!==item && !pool.includes(c)));
+  const distractors = shuffle(pool).slice(0,3).map(c=> askingForTerm ? c.t : c.d);
+  const options = shuffle([correctVal, ...distractors]);
+  const correctIndex = options.indexOf(correctVal);
+
+  el.innerHTML = `
+    ${quizHeadHtml(item)}
+    <div class="qcard">
+      <div class="qmod ${modClass} mono">${MODNAME[item.m]} &middot; ${askingForTerm?'WHICH TERM MATCHES?':'WHICH DEFINITION MATCHES?'}</div>
+      <div class="qtext">${escapeHtml(quizPrompt(item))}</div>
       <div class="options" id="optionsWrap">
-        ${item.o.map((opt,i)=>`
+        ${options.map((opt,i)=>`
           <button class="opt" data-i="${i}">
             <span class="letter mono">${letters[i]}</span>
             <span>${escapeHtml(opt)}</span>
@@ -1017,32 +1225,26 @@ function renderQuiz(){
       </div>
       <div class="feedback" id="feedbackBox"></div>
     </div>
-
     <div class="quizfoot">
       <button class="navbtn primary hidden" id="nextQBtn">${qzIndex===qzDeck.length-1 ? 'See results' : 'Next question'} &rarr;</button>
     </div>
   `;
 
   document.getElementById("backHome").onclick = ()=>{ view="home"; renderHome(); };
-  el.querySelectorAll("#filterRow .fbtn").forEach(b=>{
-    b.onclick = ()=>{ startQuiz(b.dataset.f); };
-  });
-
   const optButtons = el.querySelectorAll(".opt");
   optButtons.forEach(btn=>{
     btn.onclick = ()=>{
       if(qzAnswered) return;
       qzAnswered = true;
       const chosen = parseInt(btn.dataset.i,10);
-      const correct = item.a;
-      const isRight = chosen === correct;
+      const isRight = chosen === correctIndex;
       if(isRight) qzScore++;
       else qzWrongList.push(item);
 
       optButtons.forEach(b=>{
         const i = parseInt(b.dataset.i,10);
         b.disabled = true;
-        if(i===correct) b.classList.add("correct");
+        if(i===correctIndex) b.classList.add("correct");
         else if(i===chosen) b.classList.add("wrong");
         else b.classList.add("dim");
       });
@@ -1051,28 +1253,28 @@ function renderQuiz(){
       fb.classList.add("show");
       if(isRight){
         fb.classList.add("good");
-        fb.innerHTML = "<b>Correct.</b> " + escapeHtml(item.o[correct]) + " is right.";
+        fb.innerHTML = "<b>Correct.</b> " + escapeHtml(options[correctIndex]) + " is right.";
       } else {
         fb.classList.add("bad");
-        fb.innerHTML = "<b>Not quite.</b> The correct answer is: <b>" + escapeHtml(item.o[correct]) + "</b>";
+        fb.innerHTML = "<b>Not quite.</b> The correct answer is: <b>" + escapeHtml(options[correctIndex]) + "</b>";
       }
-
       document.getElementById("nextQBtn").classList.remove("hidden");
-      // update score pill live
       document.querySelector(".scorepill").innerHTML = "Score <b>"+qzScore+"</b> / "+(qzIndex+1);
     };
   });
 
-  document.getElementById("nextQBtn").onclick = ()=>{
-    if(qzIndex < qzDeck.length-1){
-      qzIndex++;
-      qzAnswered = false;
-      renderQuiz();
-    } else {
-      view = "results";
-      renderResults();
-    }
-  };
+  document.getElementById("nextQBtn").onclick = advanceQuiz;
+}
+
+function advanceQuiz(){
+  if(qzIndex < qzDeck.length-1){
+    qzIndex++;
+    qzAnswered = false;
+    renderQuiz();
+  } else {
+    view = "results";
+    renderResults();
+  }
 }
 
 function renderResults(){
@@ -1099,14 +1301,14 @@ function renderResults(){
     </div>
     ${qzWrongList.length>0 ? `
     <div class="coverage" style="margin-top:26px;">
-      <h4>Questions you missed</h4>
+      <h4>Terms you missed</h4>
       <ul style="columns:1;">
-        ${qzWrongList.map(w=>`<li>${escapeHtml(w.q)} &mdash; <b>${escapeHtml(w.o[w.a])}</b></li>`).join("")}
+        ${qzWrongList.map(w=>`<li>${escapeHtml(w.t)} &mdash; <span style="color:var(--muted);">${escapeHtml(w.d)}</span></li>`).join("")}
       </ul>
     </div>` : ""}
   `;
   document.getElementById("backHome").onclick = ()=>{ view="home"; renderHome(); };
-  document.getElementById("retryBtn").onclick = ()=>{ startQuiz(qzFilter); };
+  document.getElementById("retryBtn").onclick = ()=>{ startQuiz(qzScope); };
   if(qzWrongList.length>0){
     document.getElementById("retryWrongBtn").onclick = ()=>{
       qzDeck = shuffle(qzWrongList);
@@ -1115,13 +1317,6 @@ function renderResults(){
       renderQuiz();
     };
   }
-}
-
-function escapeHtml(str){
-  return String(str)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;");
 }
 
 /* boot */
